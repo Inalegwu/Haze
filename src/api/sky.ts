@@ -3,6 +3,7 @@ import { router } from 'react-query-kit';
 import { SkyRuntime } from '@/lib/runtime';
 import { BlueskyService } from '@/lib/services/bluesky/service';
 import { useSessionStore } from '@/lib/state';
+import { groupNotificationsByCreatedAt } from '@/lib/utils';
 
 export const skyRouter = router('sky', {
   login: router.mutation({
@@ -29,5 +30,45 @@ export const skyRouter = router('sky', {
           return yield* bsky.getTimeline(variables);
         }),
       ),
+  }),
+  profile: router.query({
+    fetcher: async (variables: { did: string }) =>
+      await SkyRuntime.runPromise(
+        Effect.gen(function* () {
+          const bsky = yield* BlueskyService;
+          return yield* bsky.getProfile(variables.did);
+        }),
+      ),
+  }),
+  profilePosts: router.query({
+    fetcher: async (variables: { did: string }) =>
+      await SkyRuntime.runPromise(
+        Effect.gen(function* () {
+          const bsky = yield* BlueskyService;
+          return yield* bsky.getAuthorPosts(variables.did);
+        }),
+      ),
+  }),
+  myTimelines: router.query({
+    fetcher: async () =>
+      await SkyRuntime.runPromise(BlueskyService.use((s) => s.getSavedFeeds())),
+  }),
+  notifications: router.query({
+    fetcher: async () =>
+      await SkyRuntime.runPromise(
+        BlueskyService.use((s) =>
+          s
+            .listNotifications()
+            .pipe(
+              Effect.flatMap((r) =>
+                Effect.succeed(groupNotificationsByCreatedAt(r.notifications)),
+              ),
+            ),
+        ),
+      ),
+  }),
+  getConversations: router.query({
+    fetcher: async () =>
+      SkyRuntime.runPromise(BlueskyService.use((s) => s.getConversations())),
   }),
 });

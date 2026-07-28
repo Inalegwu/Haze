@@ -20,7 +20,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
         paddingHorizontal="l"
       >
         {state.routes
-          .filter((r) => r.name !== 'search')
+          .filter((r) => !['search', 'settings'].includes(r.name))
           .map((route, idx) => (
             <TouchableOpacity
               alignItems="center"

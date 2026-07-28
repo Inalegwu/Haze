@@ -14,7 +14,7 @@ export default function Feed() {
   if (isLoading) {
     return (
       <Container alignItems="center" justifyContent="center">
-        <ActivityIndicator size="large" color={theme.colors.accent} />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
       </Container>
     );
   }

@@ -1,22 +1,21 @@
 import { createTheme } from '@shopify/restyle';
 
 const palette = {
+  // Primary monochrome shades
   white: '#FFFFFF',
   offWhite: '#F6F7FB',
   lightGray: '#E8E9F0',
   mutedLight: '#8A8FA3',
   textLight: '#12131A',
 
-  offBlack: '#000000',
+  offBlack: '#0D0E13',
   surfaceDark: '#1B1C24',
   borderDark: '#2A2C36',
   mutedDark: '#8C90A3',
   textDark: '#F5F6FA',
 
-  // Single accent color - dark purple
-  accent: '#6D28D9', // Deep purple
-  accentDark: '#5B21B6',
-  accentLight: '#7C3AED',
+  blueLight: '#3D7BFF',
+  blueDark: '#5B8DEF',
 };
 
 const light = createTheme({
@@ -24,7 +23,7 @@ const light = createTheme({
     background: palette.offWhite,
     card: palette.white,
     primary: palette.textLight,
-    accent: palette.accent,
+    accent: palette.blueLight,
     text: palette.textLight,
     textMuted: palette.mutedLight,
     border: palette.lightGray,
@@ -122,7 +121,7 @@ const dark = createTheme({
     background: palette.offBlack,
     card: palette.surfaceDark,
     primary: palette.textDark,
-    accent: palette.accent,
+    accent: palette.blueDark,
     text: palette.textDark,
     textMuted: palette.mutedDark,
     border: palette.borderDark,

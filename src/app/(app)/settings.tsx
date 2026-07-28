@@ -1,10 +1,10 @@
 import { Text } from '@atoms';
 import { Container } from '@components';
 
-export default function Profile() {
+export default function Settings() {
   return (
     <Container>
-      <Text>Profile</Text>
+      <Text>Settings</Text>
     </Container>
   );
 }

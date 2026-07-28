@@ -15,12 +15,13 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset":"recommended",
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"suspicious": {
-				"noArrayIndexKey": "off"
+				"noArrayIndexKey": "off",
+				"noShadowRestrictedNames":"off"
 			},
 			"a11y": {
 				"noStaticElementInteractions": "off"

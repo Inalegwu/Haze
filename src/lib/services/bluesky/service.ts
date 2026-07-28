@@ -1,5 +1,6 @@
 import {
   AuthManager,
+  ChatManager,
   type CreatePostInput,
   FeedsManager,
   NotificationManager,
@@ -28,6 +29,7 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
       const posts = new PostManager(auth.agent);
       const profiles = new ProfileManager(auth.agent);
       const notifications = new NotificationManager(auth.agent);
+      const chat = new ChatManager(auth.agent);
 
       return {
         login: (identifier: string, password: string) =>
@@ -56,6 +58,8 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
           opts?: { limit?: number; cursor?: string },
         ) => wrap('getFeed', () => feeds.getFeed(feedUri, opts)),
 
+        getSavedFeeds: () => wrap('getSavedFeeds', () => feeds.getSavedFeeds()),
+
         createPost: (input: CreatePostInput) =>
           wrap('createPost', () => posts.createPost(input)),
 
@@ -74,6 +78,11 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
         getProfile: (actor: string) =>
           wrap('getProfile', () => profiles.getProfile(actor)),
 
+        getAuthorPosts: (
+          actor: string,
+          opts?: { limit?: number; cursor?: string },
+        ) => wrap('getAuthoPosts', () => posts.getAuthorPosts(actor, opts)),
+
         listNotifications: (
           opts?: Parameters<NotificationManager['listNotifications']>[0],
         ) =>
@@ -83,6 +92,9 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
 
         getUnreadNotificationCount: () =>
           wrap('getUnreadCount', () => notifications.getUnreadCount()),
+
+        getConversations: () =>
+          wrap('getConversations', () => chat.listConvos()),
       };
     }),
   },
