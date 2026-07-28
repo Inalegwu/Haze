@@ -13,7 +13,7 @@ type SessionStore = {
 export const globalState = create<GlobalState>()(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: 'dark',
       toggleTheme: () =>
         set((prev) => ({
           ...prev,

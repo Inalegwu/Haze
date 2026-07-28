@@ -1,4 +1,4 @@
-import { Notification } from '@skymarshal/sdk';
+import type { Notification } from '@skymarshal/sdk';
 import * as String from 'effect/String';
 import { PixelRatio, Platform } from 'react-native';
 import { ANDROID_SCALE_LIMIT, SCALE } from './constants';
@@ -23,23 +23,7 @@ export const getFeedName = (uri: string) => {
   return split[split.length - 1]?.split('-').join(' ');
 };
 
-export interface Notification {
-  uri: string;
-  cid: string;
-  author: {
-    did: string;
-    handle: string;
-    displayName?: string;
-    avatar?: string;
-  };
-  reason: 'like' | 'repost' | 'follow' | 'mention' | 'reply' | 'quote';
-  reasonSubject?: string;
-  record: unknown;
-  isRead: boolean;
-  indexedAt: string;
-}
-
-export interface GroupedNotification {
+export type GroupedNotification = {
   groupId: string;
   startTime: string;
   endTime: string;
@@ -49,12 +33,12 @@ export interface GroupedNotification {
     start: string;
     end: string;
   };
-}
+};
 
-interface NotificationWithDate extends Notification {
+type NotificationWithDate = Notification & {
   _createdAt: Date | null;
   _originalRecord: unknown;
-}
+};
 
 function extractCreatedAt(notification: Notification): Date | null {
   // Handle different possible record structures

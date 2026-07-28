@@ -31,6 +31,7 @@ const light = createTheme({
     inputBackground: palette.white,
   },
   spacing: {
+    '-1': -1,
     none: 0,
     px: 1,
     '0.5': 2,

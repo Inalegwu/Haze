@@ -63,9 +63,11 @@ export default function ProfileLayout() {
             paddingVertical="m"
           >
             <Box height="100%" alignItems="flex-start" justifyContent="center">
-              <Text fontSize={20} color="text" fontFamily="SFProRoundedHeavy">
-                {profile.displayName}
-              </Text>
+              <Box gap="-1">
+                <Text fontSize={25} color="text" fontFamily="SFProRoundedHeavy">
+                  {profile.displayName}
+                </Text>
+              </Box>
               <Box width="80%" marginVertical="s">
                 <Text numberOfLines={2} fontSize={11} color="text">
                   {profile.description}

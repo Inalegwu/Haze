@@ -141,7 +141,7 @@ function Header(props: DrawerHeaderProps) {
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
           <Icon name="HamburgerMenu" size="l" />
         </TouchableOpacity>
-        <Text>{String.capitalize(props.route.name)}</Text>
+        {/* TODO: app icon */}
         <Link href="/search">
           <Icon name="SearchNormal1" />
         </Link>
