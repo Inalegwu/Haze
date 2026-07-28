@@ -5,11 +5,13 @@ import { Effect } from 'effect';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { LogBox } from 'react-native';
 import { SkyRuntime } from '@/lib/runtime';
 import { BlueskyService } from '@/lib/services/bluesky/service';
 import { globalState, useSessionStore } from '@/lib/state';
 import { dark, light } from '@/lib/theme';
-import 'unicode-segmenter/intl-polyfill';
+
+LogBox.ignoreAllLogs();
 
 export default function Layout() {
   const colorTheme = globalState((state) => state.theme);

@@ -7,7 +7,7 @@ const palette = {
   mutedLight: '#8A8FA3',
   textLight: '#12131A',
 
-  offBlack: '#0D0E13',
+  offBlack: '#000000',
   surfaceDark: '#1B1C24',
   borderDark: '#2A2C36',
   mutedDark: '#8C90A3',

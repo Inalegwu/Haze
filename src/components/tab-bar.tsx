@@ -7,45 +7,47 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
     <Box
       width="100%"
       alignItems="center"
-      justifyContent="space-between"
       flexDirection="row"
-      gap="3"
       backgroundColor="background"
-      height={60}
+      height={70}
     >
       <Box
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
         width="100%"
-        paddingVertical="xxl"
+        paddingVertical="xl"
         paddingHorizontal="l"
       >
-        {state.routes.map((route, idx) => (
-          <TouchableOpacity
-            alignItems="center"
-            justifyContent="center"
-            key={route.key}
-            onPress={() => navigation.navigate(route.name)}
-          >
-            <Icon
-              name={
-                route.name === 'feed'
-                  ? 'Home'
-                  : route.name === 'search'
-                    ? 'SearchNormal1'
-                    : route.name === 'activity'
-                      ? 'Heart'
-                      : route.name === 'profile'
-                        ? 'Profile'
-                        : 'Menu'
-              }
-              size="6"
-              variant="Linear"
-              color={state.index === idx ? 'text' : 'textMuted'}
-            />
-          </TouchableOpacity>
-        ))}
+        {state.routes
+          .filter((r) => r.name !== 'search')
+          .map((route, idx) => (
+            <TouchableOpacity
+              alignItems="center"
+              justifyContent="center"
+              key={route.key}
+              hitSlop={10}
+              padding="m"
+              onPress={() => navigation.navigate(route.name)}
+            >
+              <Icon
+                name={
+                  route.name === 'feed'
+                    ? 'Home'
+                    : route.name === 'messages'
+                      ? 'Send2'
+                      : route.name === 'activity'
+                        ? 'Heart'
+                        : route.name === 'profile'
+                          ? 'Profile'
+                          : 'Menu'
+                }
+                size="6"
+                variant="Linear"
+                color={state.index === idx ? 'text' : 'textMuted'}
+              />
+            </TouchableOpacity>
+          ))}
       </Box>
     </Box>
   );

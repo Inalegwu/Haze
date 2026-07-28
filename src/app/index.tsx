@@ -1,37 +1,46 @@
-import { Text } from '@atoms';
+import { Box, Text } from '@atoms';
 import { Container, TouchableOpacity } from '@components';
 import { useRouter } from 'expo-router';
-import { ActivityIndicator } from 'react-native';
-import { app } from 'src/api/app';
+import { useEffect } from 'react';
+import { useSessionStore } from '@/lib/state';
 
 export default function Page() {
   const router = useRouter();
-  const { mutate: login, isPending } = app.sky.login.useMutation({
-    onSuccess: () => router.navigate('/(app)/feed'),
-    onError: (error) => console.error(error),
-  });
+
+  const session = useSessionStore((s) => s.session);
+
+  useEffect(() => {
+    if (session) {
+      router.replace('/feed');
+    }
+  }, [router, session]);
 
   return (
     <Container gap="l" padding="m" alignItems="center" justifyContent="center">
-      <Text>Hello world</Text>
-      <TouchableOpacity
-        padding="3"
-        borderRadius="full"
-        backgroundColor="card"
+      <Box
         width="100%"
+        alignItems="flex-start"
+        justifyContent="flex-end"
+        flex={1}
+        paddingVertical="ml"
+      >
+        <Text fontSize={30} fontFamily="SFProRoundedBold">
+          Welcome to Haze
+        </Text>
+      </Box>
+      <TouchableOpacity
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        gap="m"
-        onPress={() =>
-          login({
-            identifier: 'disgruntleddev.bsky.social',
-            password: 'inalegwu2004',
-          })
-        }
+        backgroundColor="text"
+        width="100%"
+        borderRadius="full"
+        padding="s"
+        onPress={() => router.navigate('/login')}
       >
-        <Text>Login</Text>
-        {isPending && <ActivityIndicator size="small" />}
+        <Text fontFamily="SFProRoundedBold" color="background">
+          Get Started
+        </Text>
       </TouchableOpacity>
     </Container>
   );
