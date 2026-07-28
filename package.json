@@ -1,6 +1,6 @@
 {
-  "name": "spawnpoint",
-  "description": "launchpad for amazing react native applications",
+  "name": "Haze",
+  "description": "A beautiful BlueSky & ATProto client",
   "version": "0.0.1",
   "main": "expo-router/entry",
   "scripts": {
@@ -26,6 +26,7 @@
     "@expo/prebuild-config": "^57.0.9",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@shopify/restyle": "^2.4.5",
+    "@skymarshal/sdk": "^2.4.0",
     "@tanstack/react-query": "^5.101.4",
     "@types/react": "~19.2.17",
     "axios": "^1.18.1",
@@ -52,6 +53,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@biomejs/biome": "^2.5.5",
+    "@types/base-64": "^1.0.2",
     "cross-env": "^10.1.0"
   },
   "private": true,

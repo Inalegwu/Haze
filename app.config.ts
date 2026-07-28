@@ -5,7 +5,7 @@ import pkg from './package.json';
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: pkg.name,
-  slug: 'spawnpoint',
+  slug: 'haze',
   version: pkg.version,
   scheme: `com.${pkg.name.toLowerCase()}`,
   userInterfaceStyle: 'light',
