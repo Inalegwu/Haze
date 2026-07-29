@@ -1,0 +1,59 @@
+name: 'Setup EAS Build + Trigger Build'
+description: 'Setup EAS Build and Trigger Build'
+
+inputs :
+  APP_ENV : 
+    description: 'APP_ENV (one of) : development,staging , production'
+    required: true
+    default: 'staging'
+  
+  AUTO_SUBMIT:
+    description: 'AUTO_SUBMIT (one of): true,false'
+    required: true
+    default: 'false'
+  
+  ANDROID:
+    description: 'run for ANDROID (one of) : true,false'
+    required: true
+    default : 'true'
+  
+  VERSION:
+    description: 'VERSION'
+    required: true
+    default: '0.0.0'
+  
+  IOS:
+    description: 'run for IOS (one of) : true,false'
+    required: true
+    default : 'false'
+
+  EXPO_TOKEN:
+    description: 'EXPO_TOKEN'
+    required: true
+
+runs :
+  using : 'composite'
+  steps:
+    - name: 💯 Check for EXPO_TOKEN
+      run: |
+        if [-z "${{inputs.EXPO_TOKEN}}"]; then
+          echo "You must provide an EXPO_TOKEN secret linked to this project's expo account in repo secrets . Learn more: https://docs.expo.dev/eas-update/github-actions"
+          exit 1
+        fi
+      shell: bash
+
+    - name: 📦 Setup Expo and EAS
+      uses: expo/expo-github-action@v8
+      with:
+        eas-version: latest
+        token: ${{inputs.EXPO_TOKEN}}
+
+    - name: 📱 Run Android Build
+      if: ${{inputs.ANDROID=='true'}}
+      run: bun build:${{inputs.APP_ENV}}:android --non-interactive --no-wait
+      shell: bash
+
+    - name: 📱 Run IOS Build
+      if : ${{inputs.IOS=='true'}}
+      run: bun build:${{inputs.APP_ENV}}:ios --non-interative --no-wait --message
+      shell: bash

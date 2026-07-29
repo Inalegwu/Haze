@@ -6,8 +6,6 @@ import { useGlobalState } from '@/lib/state';
 
 export default function Settings() {
   const router = useRouter();
-  const theme = useGlobalState((state) => state.theme);
-  const toggleTheme = useGlobalState((state) => state.toggleTheme);
 
   return (
     <Container>
@@ -22,7 +20,7 @@ export default function Settings() {
           <TouchableOpacity onPress={() => router.back()}>
             <Icon name="ArrowLeft" size="5" />
           </TouchableOpacity>
-          <Text fontSize={24} fontWeight="700">
+          <Text fontSize={24} fontFamily="SatoshiBlack">
             Settings
           </Text>
         </Box>
@@ -50,29 +48,6 @@ export default function Settings() {
               justifyContent="space-between"
             >
               <Text>Theme</Text>
-              <TouchableOpacity
-                hitSlop={20}
-                backgroundColor="background"
-                borderWidth={0.6}
-                borderColor="border"
-                borderRadius="xs"
-                padding="2"
-                onPress={toggleTheme}
-              >
-                <Icon
-                  name={
-                    theme === 'light'
-                      ? 'Moon'
-                      : theme === 'dark'
-                        ? 'Sun1'
-                        : theme === 'system'
-                          ? 'Windows'
-                          : 'Airplane'
-                  }
-                  size="4"
-                  variant="Bold"
-                />
-              </TouchableOpacity>
             </Box>
           </Box>
         </Box>

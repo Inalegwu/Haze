@@ -93,7 +93,7 @@ function ThreadRow({
 
 function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
   return (
-    <Box paddingVertical="l">
+    <Box paddingVertical="m">
       <Box
         paddingHorizontal="m"
         width="100%"
@@ -164,9 +164,6 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
           </Text>
         </Box>
       </Box>
-      {/* {hasReplies && (
-        <Box width={2} height={16} marginLeft="5" backgroundColor="border" />
-      )} */}
     </Box>
   );
 }

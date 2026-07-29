@@ -1,0 +1,31 @@
+name: Check Linting, Types and Code Quality
+
+on:
+  pull_request:
+    branches: [ master,dev ]
+
+jobs:
+  lint:
+    name: Lint TS (Biome)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Bun + install deps
+        uses: ./.github/actions/setup-bun
+
+      - name: Setup Biome
+        if: github.event_name=='pull_request'
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+
+      - name: Typechecking
+        run: bun type:check
+
+      - name: Run Biome
+        run: biome ci .

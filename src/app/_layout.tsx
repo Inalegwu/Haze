@@ -8,13 +8,12 @@ import { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 import { SkyRuntime } from '@/lib/runtime';
 import { BlueskyService } from '@/lib/services/bluesky/service';
-import { useGlobalState, useSessionStore } from '@/lib/state';
-import { dark, light } from '@/lib/theme';
+import { useSessionStore, useThemeStore } from '@/lib/state';
 
 LogBox.ignoreAllLogs();
 
 export default function Layout() {
-  const colorTheme = useGlobalState((state) => state.theme);
+  const activeTheme = useThemeStore((state) => state.getActiveTheme());
   const [booted, setBooted] = useState(false);
   const [fontsLoaded] = useFonts({
     SatoshiMedium: require('../assets/fonts/Satoshi-Medium.otf'),
@@ -47,7 +46,7 @@ export default function Layout() {
   if (!booted) return null;
 
   return (
-    <ThemeProvider theme={colorTheme === 'dark' ? dark : light}>
+    <ThemeProvider theme={activeTheme}>
       <QueryClientProvider
         client={
           new QueryClient({
@@ -59,10 +58,7 @@ export default function Layout() {
           })
         }
       >
-        <StatusBar
-          backgroundColor="background"
-          style={colorTheme === 'light' ? 'dark' : 'light'}
-        />
+        <StatusBar backgroundColor="background" style="auto" />
         <Stack screenOptions={{ headerShown: false }} />
       </QueryClientProvider>
     </ThemeProvider>

@@ -1,0 +1,14 @@
+name : 'Setup Bun  + Install Dependencies'
+description : 'Setup Bun + Install Dependencies'
+
+runs:
+  using : 'composite'
+  steps:
+    - uses : pnpm/action-setup@v2
+      with :
+        version : 8
+    - uses : oven-sh/setup-bun@v1
+
+    - name : 📦 Box Install Project Deps
+      run  : bun install
+      shell : bash

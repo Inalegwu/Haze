@@ -75,13 +75,18 @@ export default function Post({ post }: Props) {
           flexDirection="column"
         >
           <Box
-            width="88%"
+            width="80%"
             gap="6"
             flexDirection="row"
             alignItems="center"
             justifyContent="space-between"
           >
-            <Text fontFamily="SatoshiBold" fontSize={13} fontWeight="600">
+            <Text
+              fontFamily="SatoshiBold"
+              numberOfLines={1}
+              fontSize={13}
+              fontWeight="600"
+            >
               {post.author.displayName}
             </Text>
             <Box

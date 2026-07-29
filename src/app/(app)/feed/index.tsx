@@ -1,5 +1,5 @@
 import { Box } from '@atoms';
-import { Container, FlatList, Post } from '@components';
+import { FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
@@ -24,36 +24,36 @@ export default function Feed() {
   }, [fetchNextPage, isFetchingNextPage, hasNextPage]);
 
   return (
-    <Container>
-      <FlatList
-        data={data?.pages.flatMap((page) => page.posts)}
-        keyExtractor={(item) => item.cid}
-        renderItem={({ item }) => <Post post={item} />}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={2}
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-        }
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <Box
-              width="100%"
-              padding="m"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <ActivityIndicator size="small" color={theme.colors.primary} />
-            </Box>
-          ) : null
-        }
-        ListEmptyComponent={
-          !isLoading ? (
-            <Box padding="m">
-              <ActivityIndicator size="large" color={theme.colors.primary} />
-            </Box>
-          ) : null
-        }
-      />
-    </Container>
+    <FlatList
+      backgroundColor="background"
+      data={data?.pages.flatMap((page) => page.posts)}
+      keyExtractor={(item) => item.cid}
+      renderItem={({ item }) => <Post post={item} />}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={2}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+      }
+      ListFooterComponent={
+        isFetchingNextPage ? (
+          <Box
+            width="100%"
+            padding="m"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <ActivityIndicator size="small" color={theme.colors.primary} />
+          </Box>
+        ) : null
+      }
+      ListEmptyComponent={
+        !isLoading ? (
+          <Box padding="m">
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+          </Box>
+        ) : null
+      }
+    />
   );
 }

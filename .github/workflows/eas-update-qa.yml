@@ -1,0 +1,23 @@
+name: EAS Update QA
+
+on:
+    workflow_dispatch
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🛠️ Setup Repo
+              uses: actions/checkout@v3
+
+            - name: 📦 Setup Bun + Install
+              uses: ./.github/actions/setup-bun
+
+            - name: ⛴️ Setup EAS
+              uses: expo/expo-github-action@v8
+              with:
+                eas-version: latest
+                token: ${{secrets.EXPO_TOKEN}}
+            
+            - name: 🚀 Create Update
+              run : bunx eas update --auto --non-interactive --profile staging
