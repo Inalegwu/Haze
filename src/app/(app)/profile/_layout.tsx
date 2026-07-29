@@ -56,7 +56,7 @@ export default function ProfileLayout() {
               hitSlop={20}
               onPress={() => router.navigate('/settings')}
             >
-              <Icon name="Setting5" color="text" size="5" variant="Bold" />
+              <Icon name="Setting5" color="textAlt" size="5" variant="Bold" />
             </TouchableOpacity>
           </Box>
           <Box
@@ -67,12 +67,12 @@ export default function ProfileLayout() {
           >
             <Box height="100%" alignItems="flex-start" justifyContent="center">
               <Box gap="-1">
-                <Text fontSize={25} color="text">
+                <Text fontSize={25} fontFamily="SatoshiBlack" color="textAlt">
                   {profile.displayName}
                 </Text>
               </Box>
               <Box width="80%" marginVertical="s">
-                <Text numberOfLines={2} fontSize={11} color="text">
+                <Text numberOfLines={2} fontSize={11} color="textAlt">
                   {profile.description}
                 </Text>
               </Box>
@@ -83,7 +83,7 @@ export default function ProfileLayout() {
                 gap="xl"
               >
                 <Box alignItems="flex-start" justifyContent="center">
-                  <Text fontSize={14} color="text">
+                  <Text fontSize={14} color="textAlt">
                     {profile.followersCount}
                   </Text>
                   <Text fontSize={10} color="textMuted">
@@ -91,7 +91,7 @@ export default function ProfileLayout() {
                   </Text>
                 </Box>
                 <Box alignItems="flex-start" justifyContent="center">
-                  <Text fontSize={14} color="text">
+                  <Text fontSize={14} color="textAlt">
                     {profile.postsCount}
                   </Text>
                   <Text fontSize={10} color="textMuted">
@@ -130,7 +130,12 @@ export default function ProfileLayout() {
             @{profile.handle}
           </Text>
         </Box>
-        <ScrollView height="100%" horizontal contentContainerStyle={{ gap: 5 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          height="100%"
+          horizontal
+          contentContainerStyle={{ gap: 5 }}
+        >
           {urls.map((url, idx) => (
             <Box
               backgroundColor="card"

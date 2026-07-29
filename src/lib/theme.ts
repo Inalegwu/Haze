@@ -26,6 +26,7 @@ const light = createTheme({
     accent: palette.blueLight,
     text: palette.textLight,
     textMuted: palette.mutedLight,
+    textAlt: palette.textDark,
     border: palette.lightGray,
     navigation: '#12131A',
     inputBackground: palette.white,

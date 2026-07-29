@@ -1,19 +1,32 @@
-import { Box, Text } from '@atoms';
-import { Container, FlatList } from '@components';
+import { Box } from '@atoms';
+import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, RefreshControl } from 'react-native';
 import { app } from 'src/api/app';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
+import { useCallback } from 'react';
 
 export default function Profile() {
   const session = useSessionStore((s) => s.session);
   const theme = useTheme<Theme>();
-  const { data, isLoading } = app.sky.profilePosts.useQuery({
+  const {
+    data,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    refetch,
+    isRefetching,
+  } = app.sky.profilePosts.useInfiniteQuery({
     variables: {
       did: session!.did,
     },
   });
+
+  const onEndReached = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [fetchNextPage, isFetchingNextPage, hasNextPage]);
 
   if (isLoading || !data) {
     return (
@@ -29,39 +42,34 @@ export default function Profile() {
   }
 
   return (
-    <Container>
-      <FlatList
-        data={data?.posts}
-        ListEmptyComponent={() => (
-          <Container alignItems="center" justifyContent="center">
-            <Text fontSize={20}>Nothing To See Here</Text>
-          </Container>
-        )}
-        renderItem={({ item }) => (
+    <FlatList
+      data={data?.pages.flatMap((page) => page.posts)}
+      keyExtractor={(item) => item.cid}
+      renderItem={({ item }) => <Post post={item} />}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={2}
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+      }
+      ListFooterComponent={
+        isFetchingNextPage ? (
           <Box
-            key={item.cid}
             width="100%"
-            borderBottomWidth={0.8}
-            borderBottomColor="border"
-            paddingHorizontal="s"
-            paddingVertical="m"
+            padding="m"
+            alignItems="center"
+            justifyContent="center"
           >
-            <Text fontSize={14}>{item.text}</Text>
+            <ActivityIndicator size="small" color={theme.colors.primary} />
           </Box>
-        )}
-      />
-      {/* {data?.posts.map((post) => (
-        <Box
-          key={post.cid}
-          width="100%"
-          borderBottomWidth={0.8}
-          borderBottomColor="border"
-          paddingHorizontal="s"
-          paddingVertical="m"
-        >
-          <Text fontSize={14}>{post.text}</Text>
-        </Box>
-      ))} */}
-    </Container>
+        ) : null
+      }
+      ListEmptyComponent={
+        !isLoading ? (
+          <Box padding="m">
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+          </Box>
+        ) : null
+      }
+    />
   );
 }

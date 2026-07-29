@@ -42,7 +42,7 @@ function ThreadRow({
 
   return (
     <Pressable onPress={() => goToPost(post.uri)}>
-      <Box flexDirection="row" paddingHorizontal="m">
+      <Box flexDirection="row">
         <Box width={avatarSize} alignItems="center">
           {showLineAbove && (
             <Box width={2} height={8} backgroundColor="border" />
@@ -82,8 +82,14 @@ function ThreadRow({
 
 function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
   return (
-    <Box paddingHorizontal="m" paddingVertical="l">
-      <Box width="100%" gap="3" flexDirection="row" alignItems="center">
+    <Box paddingVertical="l">
+      <Box
+        paddingHorizontal="m"
+        width="100%"
+        gap="3"
+        flexDirection="row"
+        alignItems="center"
+      >
         <Image
           source={{ uri: post.author.avatar }}
           style={{ width: 38, height: 38, borderRadius: 24 }}
@@ -95,19 +101,22 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
       <Text marginTop="s" fontSize={13.5}>
         {post.text}
       </Text>
-      {post.embed !== null && (
-        <Box marginTop="s">
-          <PostEmbed embed={post.embed} />
-        </Box>
-      )}
+      <Box width="100%" paddingHorizontal="m">
+        {post.embed !== null && (
+          <Box marginTop="s">
+            <PostEmbed embed={post.embed} />
+          </Box>
+        )}
+      </Box>
       <Box
         borderTopColor="border"
         borderBottomColor="border"
-        borderTopWidth={0.6}
-        borderBottomWidth={0.6}
+        borderTopWidth={0.4}
+        borderBottomWidth={0.4}
         paddingVertical="2"
+        paddingHorizontal="m"
         flexDirection="row"
-        marginTop="s"
+        marginTop="m"
         gap="m"
       >
         <Box

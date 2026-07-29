@@ -357,3 +357,73 @@ export function extractExternal(embed: unknown): ExternalEmbed | null {
   if (isRecordWithMediaEmbed(embed)) return extractExternal(embed.media);
   return null;
 }
+
+// src/services/bluesky/BlueskyService.ts
+import { AppBskyFeedDefs } from '@atproto/api';
+
+export type ReplyParentPost = {
+  uri: string;
+  cid: string;
+  text: string;
+  author: {
+    did: string;
+    handle: string;
+    displayName?: string;
+    avatar?: string;
+  };
+};
+
+export function extractReplyParent(
+  item: AppBskyFeedDefs.FeedViewPost,
+): ReplyParentPost | undefined {
+  const parent = item.reply?.parent;
+  // parent can also be NotFoundPost or BlockedPost — narrow to the real thing
+  if (!parent || !AppBskyFeedDefs.isPostView(parent)) return undefined;
+
+  return {
+    uri: parent.uri,
+    cid: parent.cid,
+    text: (parent.record as { text?: string })?.text ?? '',
+    author: {
+      did: parent.author.did,
+      handle: parent.author.handle,
+      displayName: parent.author.displayName,
+      avatar: parent.author.avatar,
+    },
+  };
+}
+
+export function mapFeedItem(item: AppBskyFeedDefs.FeedViewPost) {
+  const post = item.post;
+  return {
+    uri: post.uri,
+    cid: post.cid,
+    text: (post.record as { text?: string })?.text ?? '',
+    createdAt:
+      (post.record as { createdAt?: string })?.createdAt ?? post.indexedAt,
+    author: {
+      did: post.author.did,
+      handle: post.author.handle,
+      displayName: post.author.displayName,
+      avatar: post.author.avatar,
+    },
+    embed: post.embed,
+    replyCount: post.replyCount ?? 0,
+    repostCount: post.repostCount ?? 0,
+    likeCount: post.likeCount ?? 0,
+    indexedAt: post.indexedAt,
+    reason:
+      item.reason?.$type === 'app.bsky.feed.defs#reasonRepost'
+        ? {
+            type: 'repost' as const,
+            by: {
+              did: item.reason.by.did,
+              handle: item.reason.by.handle,
+              displayName: item.reason.by.displayName,
+            },
+            indexedAt: item.reason.indexedAt,
+          }
+        : undefined,
+    replyParent: extractReplyParent(item),
+  };
+}

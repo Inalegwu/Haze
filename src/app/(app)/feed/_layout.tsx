@@ -1,7 +1,7 @@
 import { Box, Icon, Text } from '@atoms';
-import { Link, ScrollView, TouchableOpacity } from '@components';
+import { Container, FlatList, Link, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { String } from 'effect';
+import { router } from 'expo-router';
 import {
   Drawer,
   type DrawerContentComponentProps,
@@ -11,7 +11,6 @@ import { ActivityIndicator } from 'react-native';
 import { app } from 'src/api/app';
 import SafeAreaView from 'src/components/safe-area-view';
 import type { Theme } from '@/lib/theme';
-import { getFeedName } from '@/lib/utils';
 
 export default function Layout() {
   return (
@@ -31,17 +30,21 @@ function DrawerContent(props: DrawerContentComponentProps) {
 
   if (isLoading || !timelines) {
     return (
-      <Box alignItems="center" justifyContent="center">
+      <Container alignItems="center" justifyContent="center">
         <ActivityIndicator size="small" color={theme.colors.primary} />
-      </Box>
+      </Container>
     );
   }
 
   const feeds = timelines.filter((t) => t.type === 'feed') || [];
-  const lists = timelines?.filter((t) => t.type === 'list') || [];
 
   return (
-    <Box width="100%" height="100%" backgroundColor="background">
+    <Box
+      width="100%"
+      height="100%"
+      paddingBottom="m"
+      backgroundColor="background"
+    >
       <SafeAreaView width="100%" height="100%" padding="m">
         <Box
           width="100%"
@@ -57,7 +60,45 @@ function DrawerContent(props: DrawerContentComponentProps) {
             <Icon size="5" name="SidebarLeft" />
           </TouchableOpacity>
         </Box>
-        <ScrollView
+        <FlatList
+          data={feeds}
+          showsVerticalScrollIndicator={false}
+          backgroundColor="card"
+          borderWidth={0.5}
+          borderColor="border"
+          borderRadius="m"
+          ListHeaderComponent={() => (
+            <Box
+              width="100%"
+              paddingHorizontal="m"
+              paddingVertical="s"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="space-between"
+              borderBottomWidth={0.6}
+              borderBottomColor="border"
+            >
+              <Text color="textMuted" fontSize={13} fontFamily="SatoshiBold">
+                Feeds
+              </Text>
+            </Box>
+          )}
+          renderItem={({ item: feed, index: idx }) => (
+            <TouchableOpacity
+              onPress={() => router.push(`/feed?${feed.uri}`)}
+              borderBottomColor="border"
+              borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
+              paddingHorizontal="s"
+              paddingVertical="s"
+              key={feed.id}
+            >
+              <Text color="text" fontSize={13}>
+                {feed.displayName}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+        {/* <ScrollView
           contentContainerStyle={{ gap: 5 }}
           showsVerticalScrollIndicator={false}
         >
@@ -70,19 +111,22 @@ function DrawerContent(props: DrawerContentComponentProps) {
                 borderWidth={0.6}
                 borderColor="border"
               >
-                {feeds.map((feed, idx) => (
-                  <Box
-                    borderBottomColor="border"
-                    borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
-                    paddingHorizontal="s"
-                    paddingVertical="s"
-                    key={feed.id}
-                  >
-                    <Text color="textMuted" fontSize={13}>
-                      {String.capitalize(getFeedName(feed.value) || '')}
-                    </Text>
-                  </Box>
-                ))}
+                {feeds.map(
+                  (feed, idx) =>
+                    feed.displayName && (
+                      <Box
+                        borderBottomColor="border"
+                        borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
+                        paddingHorizontal="s"
+                        paddingVertical="s"
+                        key={feed.id}
+                      >
+                        <Text color="textMuted" fontSize={13}>
+                          {feed.displayName}
+                        </Text>
+                      </Box>
+                    ),
+                )}
               </Box>
             </Box>
           )}
@@ -114,7 +158,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
               </Box>
             </Box>
           )}
-        </ScrollView>
+        </ScrollView> */}
       </SafeAreaView>
     </Box>
   );

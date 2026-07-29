@@ -44,19 +44,34 @@ export const skyRouter = router('sky', {
           return yield* bsky.getProfile(variables.did);
         }),
       ),
+    staleTime: 60 * 60 * 24,
   }),
-  profilePosts: router.query({
-    fetcher: async (variables: { did: string }) =>
+  profilePosts: router.infiniteQuery({
+    fetcher: async (variables: { did: string }, { pageParam }) =>
       await SkyRuntime.runPromise(
         Effect.gen(function* () {
           const bsky = yield* BlueskyService;
-          return yield* bsky.getAuthorPosts(variables.did);
+          return yield* bsky.getAuthorPosts(variables.did, {
+            cursor: pageParam,
+          });
         }),
       ),
+    initialPageParam: '',
+    getNextPageParam: (prev) => prev.cursor,
   }),
   myTimelines: router.query({
     fetcher: async () =>
       await SkyRuntime.runPromise(BlueskyService.use((s) => s.getSavedFeeds())),
+  }),
+  getFeedContent: router.infiniteQuery({
+    fetcher: async (variables: { uri: string }, { pageParam }) =>
+      await SkyRuntime.runPromise(
+        BlueskyService.use((s) =>
+          s.getFeed(variables.uri, { cursor: pageParam }),
+        ),
+      ),
+    initialPageParam: '',
+    getNextPageParam: (prev) => prev.cursor,
   }),
   notifications: router.query({
     fetcher: async () =>

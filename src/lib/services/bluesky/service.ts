@@ -9,6 +9,7 @@ import {
 } from '@skymarshal/sdk';
 import { Effect } from 'effect';
 import { asyncStorageAdapter } from '@/lib/proto/session';
+import { mapFeedItem } from '@/lib/utils';
 import { BlueskyAuthError, BlueskyRequestError } from './errors';
 
 const wrap = <A>(operation: string, run: () => Promise<A>) =>
@@ -51,14 +52,52 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
         currentDid: () => Effect.sync(() => auth.did),
 
         getTimeline: (opts?: { limit?: number; cursor?: string }) =>
-          wrap('getTimeline', () => feeds.getTimeline(opts)),
+          wrap('getTimeline', async () => {
+            const res = await auth.agent.getTimeline(opts);
+
+            return {
+              posts: res.data.feed.map(mapFeedItem),
+              cursor: res.data.cursor,
+            };
+          }),
 
         getFeed: (
           feedUri: string,
           opts?: { limit?: number; cursor?: string },
-        ) => wrap('getFeed', () => feeds.getFeed(feedUri, opts)),
+        ) =>
+          wrap('getFeed', async () => {
+            const res = await auth.agent.app.bsky.feed.getFeed({
+              feed: feedUri,
+              ...opts,
+            });
+            return {
+              posts: res.data.feed.map(mapFeedItem),
+              cursor: res.data.cursor,
+            };
+          }),
+        getSavedFeeds: () =>
+          wrap('getSavedFeeds', async () => {
+            const saved = await feeds.getSavedFeeds();
 
-        getSavedFeeds: () => wrap('getSavedFeeds', () => feeds.getSavedFeeds()),
+            const feedUris = saved
+              .filter((s) => s.type === 'feed')
+              .map((s) => s.value);
+            const generators =
+              feedUris.length > 0
+                ? await feeds.getFeedGenerators(feedUris)
+                : [];
+            const generatorsByUri = new Map(generators.map((g) => [g.uri, g]));
+
+            return saved.map((entry) => ({
+              ...entry,
+              ...(entry.type === 'feed'
+                ? generatorsByUri.get(entry.value)
+                : undefined),
+            }));
+          }),
+
+        getFeedGenerators: (uris: string[]) =>
+          wrap('getFeedGenerators', () => feeds.getFeedGenerators(uris)),
 
         createPost: (input: CreatePostInput) =>
           wrap('createPost', () => posts.createPost(input)),
@@ -81,7 +120,18 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
         getAuthorPosts: (
           actor: string,
           opts?: { limit?: number; cursor?: string },
-        ) => wrap('getAuthoPosts', () => posts.getAuthorPosts(actor, opts)),
+        ) =>
+          wrap('getAuthoPosts', async () => {
+            //  posts.getAuthorPosts(actor, opts);
+            const res = await auth.agent.getAuthorFeed({
+              actor,
+              ...opts,
+            });
+            return {
+              posts: res.data.feed.map(mapFeedItem),
+              cursor: res.data.cursor,
+            };
+          }),
 
         listNotifications: (
           opts?: Parameters<NotificationManager['listNotifications']>[0],
