@@ -20,9 +20,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
+    package: 'com.disgruntleddevs.haze',
   },
   extra: {
     ...ClientEnv,
+    eas: {
+      projectId: '5a0beb88-5f85-4ad5-8556-8908d8f2d0fe',
+    },
   },
   experiments: {
     typedRoutes: true,

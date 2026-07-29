@@ -12,6 +12,7 @@ module.exports = (api) => {
             '@components': './src/components/index.ts',
             '@atoms': './src/components/atoms/index.ts',
             '@/lib': './src/lib',
+            '@api': './src/api/app.ts',
           },
           extensions: [
             '.ios.ts',

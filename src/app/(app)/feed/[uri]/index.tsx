@@ -1,16 +1,16 @@
+import app from '@api';
 import { Box, Text } from '@atoms';
 import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator } from 'react-native';
-import { app } from 'src/api/app';
 import type { Theme } from '@/lib/theme';
 
 export default function Feed() {
   const color = useTheme<Theme>().colors;
   const { uri } = useLocalSearchParams<{ uri: string }>();
 
-  const { data, isLoading } = app.sky.getFeedContent.useInfiniteQuery({
+  const { data, isLoading } = app.timeline.getFeedContent.useInfiniteQuery({
     variables: {
       uri,
     },

@@ -1,9 +1,9 @@
+import app from '@api';
 import { Box } from '@atoms';
-import { FlatList, Post } from '@components';
+import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
-import { app } from 'src/api/app';
 import type { Theme } from '@/lib/theme';
 
 export default function Feed() {
@@ -15,13 +15,21 @@ export default function Feed() {
     fetchNextPage,
     refetch,
     isRefetching,
-  } = app.sky.timeline.useInfiniteQuery();
+  } = app.timeline.getTimeline.useInfiniteQuery();
 
   const theme = useTheme<Theme>();
 
   const onEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, isFetchingNextPage, hasNextPage]);
+
+  if (isLoading) {
+    return (
+      <Container alignItems="center" justifyContent="center">
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </Container>
+    );
+  }
 
   return (
     <FlatList

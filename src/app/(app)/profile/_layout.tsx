@@ -1,20 +1,25 @@
+import app from '@api';
 import { Box, Icon, Text } from '@atoms';
 import { Container, FlatList, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { Slot, useRouter } from 'expo-router';
+import { router, Slot } from 'expo-router';
 import { ActivityIndicator, Image, Linking, StyleSheet } from 'react-native';
-import { app } from 'src/api/app';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
 import { extractUrls } from '@/lib/utils';
 
 export default function ProfileLayout() {
-  const router = useRouter();
   const session = useSessionStore((s) => s.session);
   const theme = useTheme<Theme>();
-  const { data: profile, isLoading } = app.sky.profile.useQuery({
+  const { data: profile, isLoading } = app.profile.myProfile.useQuery({
     variables: {
       did: session?.did!,
+    },
+  });
+  const { mutate: logout } = app.auth.logout.useMutation({
+    onSuccess: () => {
+      useSessionStore.getState().clearSession();
+      router.replace('/(auth)/login');
     },
   });
 
@@ -51,7 +56,16 @@ export default function ProfileLayout() {
             flexDirection="row"
             alignItems="center"
             justifyContent="flex-end"
+            gap="5"
           >
+            <TouchableOpacity onPress={() => logout()}>
+              <Icon
+                name="LogoutCurve"
+                variant="Bold"
+                size="5"
+                color="textAlt"
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               hitSlop={20}
               onPress={() => router.navigate('/settings')}

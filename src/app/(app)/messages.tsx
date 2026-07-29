@@ -1,15 +1,15 @@
+import app from '@api';
 import { Box, Text } from '@atoms';
 import { Container } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { ActivityIndicator } from 'react-native';
-import { app } from 'src/api/app';
 import SafeAreaView from 'src/components/safe-area-view';
 import type { Theme } from '@/lib/theme';
 
 export default function Messages() {
   const colors = useTheme<Theme>().colors;
   const { data: conversations, isLoading } =
-    app.sky.getConversations.useQuery();
+    app.chat.getConversations.useQuery();
 
   if (isLoading) {
     return (

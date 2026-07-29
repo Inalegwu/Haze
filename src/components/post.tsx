@@ -75,8 +75,7 @@ export default function Post({ post }: Props) {
           flexDirection="column"
         >
           <Box
-            width="80%"
-            gap="6"
+            width="100%"
             flexDirection="row"
             alignItems="center"
             justifyContent="space-between"

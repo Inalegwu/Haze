@@ -1,14 +1,14 @@
+import app from '@api';
 import { Box, Icon, Text } from '@atoms';
 import { Container, FlatList, Link, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   Drawer,
   type DrawerContentComponentProps,
   type DrawerHeaderProps,
 } from 'expo-router/drawer';
 import { ActivityIndicator } from 'react-native';
-import { app } from 'src/api/app';
 import SafeAreaView from 'src/components/safe-area-view';
 import type { Theme } from '@/lib/theme';
 
@@ -25,8 +25,9 @@ export default function Layout() {
 }
 
 function DrawerContent(props: DrawerContentComponentProps) {
+  const router = useRouter();
   const theme = useTheme<Theme>();
-  const { data: timelines, isLoading } = app.sky.myTimelines.useQuery();
+  const { data: timelines, isLoading } = app.timeline.myTimelines.useQuery();
 
   if (isLoading || !timelines) {
     return (
@@ -85,7 +86,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           )}
           renderItem={({ item: feed, index: idx }) => (
             <TouchableOpacity
-              onPress={() => router.push(`/feed?${feed.uri}`)}
+              onPress={() => router.push(`/feed/${feed.uri}`)}
               borderBottomColor="border"
               borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
               paddingHorizontal="s"

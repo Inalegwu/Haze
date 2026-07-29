@@ -105,7 +105,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
     }),
     {
-      name: 'haze-theme-store',
+      name: 'bsky-theme-store',
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         customThemes: state.customThemes,

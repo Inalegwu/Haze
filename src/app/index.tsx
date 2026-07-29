@@ -16,7 +16,13 @@ export default function Page() {
   }, [router, session]);
 
   return (
-    <Container gap="l" padding="m" alignItems="center" justifyContent="center">
+    <Container
+      gap="l"
+      paddingHorizontal="m"
+      paddingVertical="xl"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Box
         width="100%"
         alignItems="flex-start"
@@ -24,7 +30,9 @@ export default function Page() {
         flex={1}
         paddingVertical="ml"
       >
-        <Text fontSize={30}>Welcome to Haze</Text>
+        <Text fontSize={50} fontFamily="SatoshiBlack">
+          Welcome to Haze
+        </Text>
       </Box>
       <TouchableOpacity
         flexDirection="row"

@@ -1,17 +1,18 @@
+import app from '@api';
 import { Box, Text } from '@atoms';
 import { Container, FlatList } from '@components';
 import { useTheme } from '@shopify/restyle';
 import moment from 'moment';
 import { ActivityIndicator, Image } from 'react-native';
-import { app } from 'src/api/app';
 import SafeAreaView from 'src/components/safe-area-view';
 import type { Theme } from '@/lib/theme';
 
 export default function Activity() {
   const color = useTheme<Theme>().colors;
-  const { data: notifications, isLoading } = app.sky.notifications.useQuery();
+  const { data, isLoading } =
+    app.notifications.myNotifications.useInfiniteQuery();
 
-  if (isLoading || !notifications) {
+  if (isLoading || !data) {
     return (
       <Container alignItems="center" justifyContent="center">
         <ActivityIndicator size="large" color={color.primary} />
@@ -33,7 +34,7 @@ export default function Activity() {
         </Text>
       </Box>
       <FlatList
-        data={notifications}
+        data={data.pages.flatMap((page) => page.notifications)}
         backgroundColor="background"
         height="100%"
         renderItem={({ item: notification }) => (

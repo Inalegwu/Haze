@@ -1,43 +1,35 @@
 import { createTheme } from '@shopify/restyle';
 
 const palette = {
-  terracottaLight: '#C48D71',
-  terracottaDark: '#D9AA8C',
-  ochreLight: '#BFA36A',
-  ochreDark: '#D9C088',
-  mossLight: '#8CA075',
-  mossDark: '#ABBE94',
-  amberLight: '#C7AC79',
-  amberDark: '#DBC494',
+  // Primary monochrome shades
+  white: '#FFFFFF',
+  offWhite: '#F6F7FB',
+  lightGray: '#E8E9F0',
+  mutedLight: '#8A8FA3',
+  textLight: '#12131A',
 
-  // sand — lighter, softer
-  sand: '#F5F0E6',
-  cardLight: '#FBF9F3',
-  borderLight: '#EAE3D4',
-  mutedLight: '#9C9282',
-  textLight: '#2E2820',
+  offBlack: '#0D0E13',
+  surfaceDark: '#1B1C24',
+  borderDark: '#2A2C36',
+  mutedDark: '#8C90A3',
+  textDark: '#F5F6FA',
 
-  // warm near-black, less saturated
-  offBlack: '#1A1611',
-  surfaceDark: '#241F18',
-  borderDark: '#383126',
-  mutedDark: '#AFA491',
-  textDark: '#EFE8DB',
+  blueLight: '#3D7BFF',
+  blueDark: '#5B8DEF',
 };
 
 const light = createTheme({
   colors: {
-    background: palette.sand,
-    card: palette.cardLight,
-    primary: palette.terracottaLight,
-    accent: palette.ochreLight,
-    success: palette.mossLight,
-    warning: palette.amberLight,
+    background: palette.offWhite,
+    card: palette.white,
+    primary: palette.textLight,
+    accent: palette.blueLight,
     text: palette.textLight,
     textMuted: palette.mutedLight,
-    border: palette.borderLight,
-    navigation: palette.textLight,
-    textAlt: palette.cardLight,
+    textAlt: palette.textDark,
+    border: palette.lightGray,
+    navigation: '#12131A',
+    inputBackground: palette.white,
   },
   spacing: {
     '-1': -1,
@@ -130,14 +122,13 @@ const dark = createTheme({
     ...light.colors,
     background: palette.offBlack,
     card: palette.surfaceDark,
-    primary: palette.terracottaDark,
-    accent: palette.ochreDark,
-    success: palette.mossDark,
-    warning: palette.amberDark,
+    primary: palette.textDark,
+    accent: palette.blueDark,
     text: palette.textDark,
     textMuted: palette.mutedDark,
     border: palette.borderDark,
     navigation: '#000000',
+    inputBackground: palette.surfaceDark,
   },
 });
 

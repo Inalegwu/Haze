@@ -1,9 +1,9 @@
+import app from '@api';
 import { Box } from '@atoms';
 import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
-import { app } from 'src/api/app';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
 
@@ -18,7 +18,7 @@ export default function Profile() {
     fetchNextPage,
     refetch,
     isRefetching,
-  } = app.sky.profilePosts.useInfiniteQuery({
+  } = app.profile.profilePosts.useInfiniteQuery({
     variables: {
       did: session!.did,
     },
