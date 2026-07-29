@@ -108,10 +108,9 @@ const light = createTheme({
   },
   textVariants: {
     defaults: {
-      fontFamily: 'Satoshi',
+      fontFamily: 'SatoshiMedium',
       fontSize: 16,
       color: 'text',
-      fontWeight: 100,
     },
   },
 });

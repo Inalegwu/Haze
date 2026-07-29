@@ -17,16 +17,11 @@ export default function Layout() {
   const colorTheme = useGlobalState((state) => state.theme);
   const [booted, setBooted] = useState(false);
   const [fontsLoaded] = useFonts({
-    // SFProRoundedBlack: require('../assets/fonts/SF-Pro-Rounded-Black.otf'),
-    // SFProRoundedBold: require('../assets/fonts/SF-Pro-Rounded-Bold.otf'),
-    // SFProRoundedHeavy: require('../assets/fonts/SF-Pro-Rounded-Heavy.otf'),
-    // SFProRoundedLight: require('../assets/fonts/SF-Pro-Rounded-Light.otf'),
-    // SFProRoundedMedium: require('../assets/fonts/SF-Pro-Rounded-Medium.otf'),
-    // SFProRoundedRegular: require('../assets/fonts/SF-Pro-Rounded-Regular.otf'),
-    // SFProRoundedSemiBold: require('../assets/fonts/SF-Pro-Rounded-Semibold.otf'),
-    // SFProRoundedThin: require('../assets/fonts/SF-Pro-Rounded-Thin.otf'),
-    // SFProRoundedUltraLight: require('../assets/fonts/SF-Pro-Rounded-Ultralight.otf'),
-    Satoshi: require('../assets/fonts/Satoshi-Variable.ttf'),
+    SatoshiMedium: require('../assets/fonts/Satoshi-Medium.otf'),
+    SatoshiRegular: require('../assets/fonts/Satoshi-Regular.otf'),
+    SatoshiLight: require('../assets/fonts/Satoshi-Light.otf'),
+    SatoshiBold: require('../assets/fonts/Satoshi-Bold.otf'),
+    SatoshiBlack: require('../assets/fonts/Satoshi-Black.otf'),
   });
 
   useEffect(() => {

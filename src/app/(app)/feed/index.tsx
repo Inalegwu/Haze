@@ -1,29 +1,59 @@
-import { Container, Post, ScrollView } from '@components';
+import { Box } from '@atoms';
+import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { ActivityIndicator } from 'react-native';
+import { useCallback } from 'react';
+import { ActivityIndicator, RefreshControl } from 'react-native';
 import { app } from 'src/api/app';
 import type { Theme } from '@/lib/theme';
 
 export default function Feed() {
-  const { data, isLoading } = app.sky.timeline.useQuery();
+  const {
+    data,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    refetch,
+    isRefetching,
+  } = app.sky.timeline.useInfiniteQuery();
 
   const theme = useTheme<Theme>();
 
-  if (isLoading) {
-    return (
-      <Container alignItems="center" justifyContent="center">
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </Container>
-    );
-  }
+  const onEndReached = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [fetchNextPage, isFetchingNextPage, hasNextPage]);
 
   return (
     <Container>
-      <ScrollView>
-        {data?.posts.map((post) => (
-          <Post post={post} key={post.cid} />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={data?.pages.flatMap((page) => page.posts)}
+        keyExtractor={(item) => item.cid}
+        renderItem={({ item }) => <Post post={item} />}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={2}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <Box
+              width="100%"
+              padding="m"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <ActivityIndicator size="small" color={theme.colors.primary} />
+            </Box>
+          ) : null
+        }
+        ListEmptyComponent={
+          !isLoading ? (
+            <Box padding="m">
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+            </Box>
+          ) : null
+        }
+      />
     </Container>
   );
 }

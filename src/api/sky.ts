@@ -5,6 +5,14 @@ import { BlueskyService } from '@/lib/services/bluesky/service';
 import { useSessionStore } from '@/lib/state';
 import { groupNotificationsByCreatedAt } from '@/lib/utils';
 
+function fetchTimelinePage(variables: { limit?: number }, cursor?: string) {
+  return SkyRuntime.runPromise(
+    BlueskyService.use((s) => s.getTimeline({ ...variables, cursor })).pipe(
+      Effect.tap((re) => Effect.log({ cursor: re.cursor })),
+    ),
+  );
+}
+
 export const skyRouter = router('sky', {
   login: router.mutation({
     mutationFn: (params: { identifier: string; password: string }) =>
@@ -22,14 +30,11 @@ export const skyRouter = router('sky', {
     onSuccess: ({ handle, did }) =>
       handle && did && useSessionStore.getState().setSession({ handle, did }),
   }),
-  timeline: router.query({
-    fetcher: async (variables: { cursor?: string }) =>
-      await SkyRuntime.runPromise(
-        Effect.gen(function* () {
-          const bsky = yield* BlueskyService;
-          return yield* bsky.getTimeline(variables);
-        }),
-      ),
+  timeline: router.infiniteQuery({
+    fetcher: async (variables: { limit?: number }, { pageParam }) =>
+      fetchTimelinePage(variables, pageParam),
+    initialPageParam: '',
+    getNextPageParam: (prev) => prev.cursor,
   }),
   profile: router.query({
     fetcher: async (variables: { did: string }) =>
