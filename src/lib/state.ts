@@ -10,7 +10,7 @@ type SessionStore = {
   clearSession: () => void;
 };
 
-export const globalState = create<GlobalState>()(
+export const useGlobalState = create<GlobalState>()(
   persist(
     (set) => ({
       theme: 'dark',

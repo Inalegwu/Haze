@@ -33,7 +33,7 @@ type Props<T> = FlatListProps<T> &
     withEmpty?: boolean;
   };
 
-const FlatList = <T extends Record<string, unknown>>({
+const FlatList = <T extends Record<string, any>>({
   data,
   renderItem,
   withEmpty = true,

@@ -71,4 +71,10 @@ export const skyRouter = router('sky', {
     fetcher: async () =>
       SkyRuntime.runPromise(BlueskyService.use((s) => s.getConversations())),
   }),
+  getPostThread: router.query({
+    fetcher: async (variables: { uri: string }) =>
+      SkyRuntime.runPromise(
+        BlueskyService.use((s) => s.getPostThread(variables.uri, 10)),
+      ),
+  }),
 });

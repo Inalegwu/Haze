@@ -1,3 +1,4 @@
+import { type AppBskyEmbedExternal, AppBskyEmbedGallery } from '@atproto/api';
 import type { Notification } from '@skymarshal/sdk';
 import * as String from 'effect/String';
 import { PixelRatio, Platform } from 'react-native';
@@ -21,23 +22,6 @@ export const getFeedName = (uri: string) => {
   const split = uri.split('/');
 
   return split[split.length - 1]?.split('-').join(' ');
-};
-
-export type GroupedNotification = {
-  groupId: string;
-  startTime: string;
-  endTime: string;
-  count: number;
-  items: Notification[];
-  createdAtRange: {
-    start: string;
-    end: string;
-  };
-};
-
-type NotificationWithDate = Notification & {
-  _createdAt: Date | null;
-  _originalRecord: unknown;
 };
 
 function extractCreatedAt(notification: Notification): Date | null {
@@ -310,16 +294,66 @@ export function groupNotificationsByTimeWindow(
   return groups;
 }
 
-// Usage example:
-/*
-const notifications: Notification[] = [
-  // ... your notifications
-];
+function isImageEmbed(embed: unknown) {
+  return (embed as { $type: string })?.$type === 'app.bsky.embed.images#view';
+}
 
-const grouped = groupNotificationsByCreatedAt(notifications, 5);
-console.log(grouped);
+function isGalleryEmbed(embed: unknown) {
+  return (embed as { $type: string })?.$type === 'app.bsky.embed.gallery#view';
+}
 
-// Or use the simpler version
-const groupedSimple = groupNotificationsByTimeWindow(notifications, 5);
-console.log(groupedSimple);
-*/
+export function isExternalEmbed(embed: unknown) {
+  return (embed as { $type: string })?.$type === 'app.bsky.embed.external#view';
+}
+
+function isRecordWithMediaEmbed(embed: unknown) {
+  return (
+    (embed as { $type: string })?.$type ===
+    'app.bsky.embed.recordWithMedia#view'
+  );
+}
+
+export function extractImages(embed: unknown) {
+  if (isImageEmbed(embed)) {
+    // @ts-expect-error
+    return embed.images.map((img) => ({
+      thumb: img.thumb,
+      fullsize: img.fullsize,
+      alt: img.alt,
+      aspectRatio: img.aspectRatio,
+    }));
+  }
+
+  if (isGalleryEmbed(embed)) {
+    return (
+      // @ts-expect-error
+      embed.items
+        // @ts-expect-error
+        .filter((item) => AppBskyEmbedGallery.isViewImage(item))
+        // @ts-expect-error
+        .map((item) => ({
+          thumb: item.thumb,
+          alt: item.alt,
+          fullsize: item.fullsize,
+          aspectRatio: item.aspectRatio,
+        }))
+    );
+  }
+
+  if (isRecordWithMediaEmbed(embed)) {
+    // @ts-expect-error
+    return extractImages(embed.media);
+  }
+
+  return [];
+}
+
+export type ExternalEmbed = AppBskyEmbedExternal.ViewExternal;
+
+export function extractExternal(embed: unknown): ExternalEmbed | null {
+  // @ts-expect-error
+  if (isExternalEmbed(embed)) return embed.external;
+  // @ts-expect-error
+  if (isRecordWithMediaEmbed(embed)) return extractExternal(embed.media);
+  return null;
+}

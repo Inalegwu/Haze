@@ -52,7 +52,10 @@ export default function ProfileLayout() {
             alignItems="center"
             justifyContent="flex-end"
           >
-            <TouchableOpacity onPress={() => router.navigate('/settings')}>
+            <TouchableOpacity
+              hitSlop={20}
+              onPress={() => router.navigate('/settings')}
+            >
               <Icon name="Setting5" color="text" size="5" variant="Bold" />
             </TouchableOpacity>
           </Box>
@@ -158,12 +161,7 @@ export default function ProfileLayout() {
           ))}
         </ScrollView>
       </Box>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        backgroundColor="background"
-      >
-        <Slot />
-      </ScrollView>
+      <Slot />
     </Container>
   );
 }

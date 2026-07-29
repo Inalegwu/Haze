@@ -47,12 +47,14 @@ function DrawerContent(props: DrawerContentComponentProps) {
           width="100%"
           flexDirection="row"
           alignItems="center"
-          justifyContent="space-between"
-          marginBottom="l"
+          justifyContent="flex-end"
+          paddingBottom="l"
         >
-          <Text>Haze</Text>
-          <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-            <Icon name="SidebarLeft" />
+          <TouchableOpacity
+            hitSlop={20}
+            onPress={() => props.navigation.closeDrawer()}
+          >
+            <Icon size="5" name="SidebarLeft" />
           </TouchableOpacity>
         </Box>
         <ScrollView
@@ -125,25 +127,28 @@ function Header(props: DrawerHeaderProps) {
   return (
     <Box
       width="100%"
-      alignItems="center"
+      alignItems="flex-end"
       flexDirection="row"
       backgroundColor="background"
-      height={95}
+      paddingTop="l"
     >
       <Box
         flexDirection="row"
-        alignItems="center"
+        alignItems="flex-end"
         justifyContent="space-between"
         width="100%"
-        paddingHorizontal="m"
-        paddingVertical="xl"
+        paddingHorizontal="2"
       >
-        <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <Icon name="HamburgerMenu" size="l" />
+        <TouchableOpacity
+          hitSlop={20}
+          padding="m"
+          onPress={() => props.navigation.toggleDrawer()}
+        >
+          <Icon name="SidebarRight" size="5" />
         </TouchableOpacity>
         {/* TODO: app icon */}
-        <Link href="/search">
-          <Icon name="SearchNormal1" />
+        <Link padding="m" href="/search">
+          <Icon name="SearchNormal1" size="5" />
         </Link>
       </Box>
     </Box>

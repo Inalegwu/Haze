@@ -27,5 +27,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     typedRoutes: true,
   },
-  plugins: ['expo-font', 'expo-router'],
+  plugins: ['expo-font', 'expo-router', 'expo-image'],
 });

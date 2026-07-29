@@ -20,13 +20,15 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
         paddingHorizontal="l"
       >
         {state.routes
-          .filter((r) => !['search', 'settings'].includes(r.name))
+          .filter(
+            (r) => !['search', 'settings', 'post/[uri]/index'].includes(r.name),
+          )
           .map((route, idx) => (
             <TouchableOpacity
               alignItems="center"
               justifyContent="center"
               key={route.key}
-              hitSlop={10}
+              hitSlop={20}
               padding="m"
               onPress={() => navigation.navigate(route.name)}
             >
