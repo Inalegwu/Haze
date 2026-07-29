@@ -36,7 +36,7 @@
     "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "effect": "^3.22.0",
-    "expo": "^57.0.8",
+    "expo": "~57.0.9",
     "expo-constants": "~57.0.7",
     "expo-font": "~57.0.1",
     "expo-image": "~57.0.1",

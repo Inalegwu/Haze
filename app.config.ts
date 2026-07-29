@@ -14,6 +14,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: false,
+    bundleIdentifier: 'com.disgruntleddevs.haze',
   },
   android: {
     adaptiveIcon: {
