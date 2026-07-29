@@ -143,6 +143,9 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
         getUnreadNotificationCount: () =>
           wrap('getUnreadCount', () => notifications.getUnreadCount()),
 
+        markNotificationsAsRead: () =>
+          wrap('markAllRead', () => notifications.markAllRead()),
+
         getConversations: () =>
           wrap('getConversations', () => chat.listConvos()),
       };
