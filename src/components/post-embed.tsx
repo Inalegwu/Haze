@@ -1,5 +1,7 @@
 import { Box, Text } from '@atoms';
+import { useTheme } from '@shopify/restyle';
 import { Linking, Pressable, useWindowDimensions } from 'react-native';
+import type { Theme } from '@/lib/theme';
 import { extractExternal, extractImages } from '@/lib/utils';
 import Image from './image';
 import ScrollView from './scrollview';
@@ -33,9 +35,12 @@ function PostImageGrid({
   images: NormalizedImage[];
   onPress?: (index: number, images: NormalizedImage[]) => void;
 }) {
+  const theme = useTheme<Theme>();
   const { width } = useWindowDimensions();
   const containerWidth = width - 32;
   const gap = 4;
+
+  const tileSize = (containerWidth - gap) / 2;
 
   if (images.length === 1) {
     return (
@@ -45,12 +50,15 @@ function PostImageGrid({
           accessibilityLabel={images[0]?.alt}
           borderRadius="m"
           contentFit="cover"
+          style={{
+            height: tileSize + 200,
+            borderColor: theme.colors.border,
+            borderWidth: 1,
+          }}
         />
       </Pressable>
     );
   }
-
-  const tileSize = (containerWidth - gap) / 2;
 
   return (
     <ScrollView
@@ -66,11 +74,11 @@ function PostImageGrid({
             source={{ uri: img.thumb }}
             accessibilityLabel={img.alt}
             borderRadius="m"
-            borderColor="border"
-            borderWidth={1}
             style={{
               width: images.length === 3 && i === 0 ? containerWidth : tileSize,
               height: tileSize + 80,
+              borderColor: theme.colors.border,
+              borderWidth: 1,
             }}
             contentFit="cover"
           />

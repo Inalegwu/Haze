@@ -61,11 +61,40 @@ export default function Post({ post }: Props) {
             </TouchableOpacity>
           </Box>
         </Box>
-        <Box width="89%" gap="3">
+        <Box width="89%" gap="3" paddingBottom="2">
           <Text numberOfLines={10} fontSize={13.7} flexWrap="wrap">
             {post.text}
           </Text>
           <PostEmbed embed={post.embed} />
+        </Box>
+        <Box width="100%" flexDirection="row" gap="m">
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap="2"
+          >
+            <Icon name="Heart" />
+            <Text color="textMuted">{post.likeCount}</Text>
+          </Box>
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap="2"
+          >
+            <Icon name="Message2" />
+            <Text color="textMuted">{post.replyCount}</Text>
+          </Box>
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap="2"
+          >
+            <Icon name="Refresh" />
+            <Text color="textMuted">{post.repostCount}</Text>
+          </Box>
         </Box>
       </Box>
     </TouchableOpacity>

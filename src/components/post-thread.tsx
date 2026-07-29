@@ -64,11 +64,11 @@ function ThreadRow({
             <Text fontWeight="700">
               {post.author.displayName ?? post.author.handle}
             </Text>
-            <Text color="textMuted" marginLeft="xs">
+            {/* <Text color="textMuted" marginLeft="xs">
               @{post.author.handle}
-            </Text>
+            </Text> */}
           </Box>
-          <Text>{post.text}</Text>
+          <Text fontSize={13.5}>{post.text}</Text>
           {post.embed != null && (
             <Box marginTop="s">
               <PostEmbed embed={post.embed} />
@@ -80,13 +80,7 @@ function ThreadRow({
   );
 }
 
-function FocalPost({
-  post,
-  hasReplies,
-}: {
-  post: ThreadPost;
-  hasReplies: boolean;
-}) {
+function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
   return (
     <Box paddingHorizontal="m" paddingVertical="l">
       <Box width="100%" gap="3" flexDirection="row" alignItems="center">
@@ -106,7 +100,16 @@ function FocalPost({
           <PostEmbed embed={post.embed} />
         </Box>
       )}
-      <Box flexDirection="row" marginTop="s">
+      <Box
+        borderTopColor="border"
+        borderBottomColor="border"
+        borderTopWidth={0.6}
+        borderBottomWidth={0.6}
+        paddingVertical="2"
+        flexDirection="row"
+        marginTop="s"
+        gap="m"
+      >
         <Box
           flexDirection="row"
           alignItems="center"
@@ -135,9 +138,9 @@ function FocalPost({
           <Text color="textMuted">{post.repostCount}</Text>
         </Box>
       </Box>
-      {hasReplies && (
+      {/* {hasReplies && (
         <Box width={2} height={16} marginLeft="5" backgroundColor="border" />
-      )}
+      )} */}
     </Box>
   );
 }
@@ -175,7 +178,7 @@ export default function PostThread({ thread }: Props) {
   const hasReplies = !!thread.replies?.length;
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {ancestors.map((ancestor, i) => (
         <Fragment key={ancestor.uri}>
           <ThreadRow

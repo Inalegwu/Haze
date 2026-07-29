@@ -30,7 +30,6 @@ export default function Page() {
         width="100%"
         paddingTop="xxxl"
         paddingHorizontal="m"
-        paddingBottom="m"
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
