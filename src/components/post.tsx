@@ -44,7 +44,7 @@ export default function Post({ post }: Props) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Text fontSize={13} fontFamily="SFProRoundedBold">
+          <Text fontSize={13} fontWeight="600">
             {post.author.displayName}
           </Text>
           <Box

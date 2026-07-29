@@ -32,16 +32,12 @@ export default function Messages() {
         alignItems="center"
         justifyContent="flex-start"
       >
-        <Text fontSize={25} fontFamily="SFProRoundedHeavy">
-          Messages
-        </Text>
+        <Text fontSize={25}>Messages</Text>
       </Box>
       <Container flex={1} alignItems="center" justifyContent="center">
         <Text>{JSON.stringify({ conversations })}</Text>
         {conversations?.length === 0 && (
-          <Text fontSize={20} fontFamily="SFProRoundedBold">
-            No conversations yet
-          </Text>
+          <Text fontSize={20}>No conversations yet</Text>
         )}
       </Container>
     </SafeAreaView>

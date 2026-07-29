@@ -24,9 +24,7 @@ export default function Page() {
         flex={1}
         paddingVertical="ml"
       >
-        <Text fontSize={30} fontFamily="SFProRoundedBold">
-          Welcome to Haze
-        </Text>
+        <Text fontSize={30}>Welcome to Haze</Text>
       </Box>
       <TouchableOpacity
         flexDirection="row"
@@ -38,9 +36,7 @@ export default function Page() {
         padding="s"
         onPress={() => router.navigate('/login')}
       >
-        <Text fontFamily="SFProRoundedBold" color="background">
-          Get Started
-        </Text>
+        <Text color="background">Get Started</Text>
       </TouchableOpacity>
     </Container>
   );

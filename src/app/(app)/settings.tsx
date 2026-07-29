@@ -22,7 +22,7 @@ export default function Settings() {
           <TouchableOpacity onPress={() => router.back()}>
             <Icon name="ArrowLeft" size="5" />
           </TouchableOpacity>
-          <Text fontSize={24} fontFamily="SFProRoundedHeavy">
+          <Text fontSize={24} fontWeight="700">
             Settings
           </Text>
         </Box>
@@ -32,7 +32,7 @@ export default function Settings() {
           justifyContent="flex-start"
           gap="4"
         >
-          <Text fontFamily="SFProRoundedBold" fontSize={17}>
+          <Text fontWeight="500" fontSize={17}>
             Appearance
           </Text>
           <Box

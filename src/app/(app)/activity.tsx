@@ -28,7 +28,7 @@ export default function Activity() {
         justifyContent="flex-start"
         paddingHorizontal="m"
       >
-        <Text fontFamily="SFProRoundedHeavy" fontSize={25}>
+        <Text fontWeight="700" fontSize={25}>
           Activity
         </Text>
       </Box>

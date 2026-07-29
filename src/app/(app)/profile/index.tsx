@@ -34,9 +34,7 @@ export default function Profile() {
         data={data?.posts}
         ListEmptyComponent={() => (
           <Container alignItems="center" justifyContent="center">
-            <Text fontSize={20} fontFamily="SFProRoundedHeavy">
-              Nothing To See Here
-            </Text>
+            <Text fontSize={20}>Nothing To See Here</Text>
           </Container>
         )}
         renderItem={({ item }) => (

@@ -63,10 +63,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
         >
           {feeds.length > 0 && (
             <Box gap="2">
-              <Text fontFamily="SFProRoundedBold" fontSize={16}>
-                {' '}
-                Feeds{' '}
-              </Text>
+              <Text fontSize={16}> Feeds </Text>
               <Box
                 borderRadius="m"
                 backgroundColor="card"
@@ -91,7 +88,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           )}
           {lists.length > 0 && (
             <Box gap="2">
-              <Text fontFamily="SFProRoundedBold" fontSize={16}>
+              <Text fontWeight="600" fontSize={16}>
                 {' '}
                 Lists{' '}
               </Text>

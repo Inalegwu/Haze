@@ -67,7 +67,7 @@ export default function ProfileLayout() {
           >
             <Box height="100%" alignItems="flex-start" justifyContent="center">
               <Box gap="-1">
-                <Text fontSize={25} color="text" fontFamily="SFProRoundedHeavy">
+                <Text fontSize={25} color="text">
                   {profile.displayName}
                 </Text>
               </Box>
@@ -83,34 +83,18 @@ export default function ProfileLayout() {
                 gap="xl"
               >
                 <Box alignItems="flex-start" justifyContent="center">
-                  <Text
-                    fontSize={14}
-                    color="text"
-                    fontFamily="SFProRoundedBold"
-                  >
+                  <Text fontSize={14} color="text">
                     {profile.followersCount}
                   </Text>
-                  <Text
-                    fontSize={10}
-                    color="textMuted"
-                    fontFamily="SFProRoundedRegular"
-                  >
+                  <Text fontSize={10} color="textMuted">
                     Followers
                   </Text>
                 </Box>
                 <Box alignItems="flex-start" justifyContent="center">
-                  <Text
-                    fontSize={14}
-                    color="text"
-                    fontFamily="SFProRoundedBold"
-                  >
+                  <Text fontSize={14} color="text">
                     {profile.postsCount}
                   </Text>
-                  <Text
-                    fontSize={10}
-                    color="textMuted"
-                    fontFamily="SFProRoundedRegular"
-                  >
+                  <Text fontSize={10} color="textMuted">
                     Posts
                   </Text>
                 </Box>
