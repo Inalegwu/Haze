@@ -4,7 +4,6 @@ import React from 'react';
 import TouchableOpacity from './touchable-opacity';
 
 export default function TabBar({ state, navigation }: BottomTabBarProps) {
-  console.log({ routes: state.routes });
   return (
     <Box
       width="100%"

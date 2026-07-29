@@ -45,7 +45,12 @@ function ThreadRow({
       <Box flexDirection="row">
         <Box width={avatarSize} alignItems="center">
           {showLineAbove && (
-            <Box width={2} height={8} backgroundColor="border" />
+            <Box
+              width={2}
+              borderRadius="full"
+              height={8}
+              backgroundColor="border"
+            />
           )}
           <Image
             source={{ uri: post.author.avatar }}
@@ -56,7 +61,13 @@ function ThreadRow({
             }}
           />
           {showLineBelow && (
-            <Box width={2} flex={1} backgroundColor="border" minHeight={12} />
+            <Box
+              width={2}
+              borderRadius="full"
+              flex={1}
+              backgroundColor="border"
+              minHeight={12}
+            />
           )}
         </Box>
         <Box flex={1} paddingLeft="s" paddingBottom="m">
@@ -98,9 +109,9 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
           {post.author.displayName ?? post.author.handle}
         </Text>
       </Box>
-      <Text marginTop="s" fontSize={13.5}>
-        {post.text}
-      </Text>
+      <Box width="100%" paddingHorizontal="m" marginTop="s">
+        <Text fontSize={13.5}>{post.text}</Text>
+      </Box>
       <Box width="100%" paddingHorizontal="m">
         {post.embed !== null && (
           <Box marginTop="s">
@@ -126,7 +137,9 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
           gap="2"
         >
           <Icon name="Heart" />
-          <Text color="textMuted">{post.likeCount}</Text>
+          <Text color="textMuted" fontSize={13}>
+            {post.likeCount}
+          </Text>
         </Box>
         <Box
           flexDirection="row"
@@ -135,7 +148,9 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
           gap="2"
         >
           <Icon name="Message2" />
-          <Text color="textMuted">{post.replyCount}</Text>
+          <Text color="textMuted" fontSize={13}>
+            {post.replyCount}
+          </Text>
         </Box>
         <Box
           flexDirection="row"
@@ -144,7 +159,9 @@ function FocalPost({ post }: { post: ThreadPost; hasReplies: boolean }) {
           gap="2"
         >
           <Icon name="Refresh" />
-          <Text color="textMuted">{post.repostCount}</Text>
+          <Text color="textMuted" fontSize={13}>
+            {post.repostCount}
+          </Text>
         </Box>
       </Box>
       {/* {hasReplies && (

@@ -63,11 +63,7 @@ export default function Layout() {
           backgroundColor="background"
           style={colorTheme === 'light' ? 'dark' : 'light'}
         />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(app)" />
-          <Stack.Screen name="compose" options={{ presentation: 'modal' }} />
-        </Stack>
+        <Stack screenOptions={{ headerShown: false }} />
       </QueryClientProvider>
     </ThemeProvider>
   );

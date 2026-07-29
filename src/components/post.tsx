@@ -43,14 +43,14 @@ export default function Post({ post }: Props) {
             <Text fontSize={11} color="textMuted">
               Replying to @{post.replyParent.author.handle}
             </Text>
-            <Text fontSize={12.5} color="textMuted" numberOfLines={2}>
+            <Text fontSize={12.5} color="textMuted">
               {post.replyParent.text}
             </Text>
           </Box>
         </TouchableOpacity>
       )}
       <TouchableOpacity
-        activeOpacity={0.9}
+        activeOpacity={1}
         onPress={() => router.push(`/post/${encodeURIComponent(post.uri)}`)}
         key={post.cid}
         width="100%"

@@ -1,8 +1,8 @@
 import { Box, Icon, Text } from '@atoms';
-import { Container, ScrollView, TouchableOpacity } from '@components';
+import { Container, FlatList, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { Slot, useRouter } from 'expo-router';
-import { ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { ActivityIndicator, Image, Linking, StyleSheet } from 'react-native';
 import { app } from 'src/api/app';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
@@ -130,7 +130,25 @@ export default function ProfileLayout() {
             @{profile.handle}
           </Text>
         </Box>
-        <ScrollView
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: 4 }}
+          data={urls.map((v) => ({ url: v }))}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              backgroundColor="card"
+              paddingHorizontal="m"
+              borderRadius="s"
+              onPress={() => Linking.openURL(item.url)}
+            >
+              <Text fontSize={11} color="accent">
+                {item.url}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+        {/* <ScrollView
           showsHorizontalScrollIndicator={false}
           height="100%"
           horizontal
@@ -148,7 +166,7 @@ export default function ProfileLayout() {
               </Text>
             </Box>
           ))}
-        </ScrollView>
+        </ScrollView> */}
       </Box>
       <Slot />
     </Container>

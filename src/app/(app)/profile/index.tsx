@@ -1,11 +1,11 @@
 import { Box } from '@atoms';
 import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
+import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
 import { app } from 'src/api/app';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
-import { useCallback } from 'react';
 
 export default function Profile() {
   const session = useSessionStore((s) => s.session);
@@ -47,7 +47,8 @@ export default function Profile() {
       keyExtractor={(item) => item.cid}
       renderItem={({ item }) => <Post post={item} />}
       onEndReached={onEndReached}
-      onEndReachedThreshold={2}
+      showsVerticalScrollIndicator={false}
+      onEndReachedThreshold={10}
       refreshControl={
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }
