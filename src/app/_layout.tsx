@@ -3,7 +3,7 @@ import { ThemeProvider } from '@shopify/restyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Effect } from 'effect';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
 import { SkyRuntime } from '@/lib/runtime';
@@ -59,7 +59,7 @@ export default function Layout() {
         }
       >
         <StatusBar backgroundColor="background" style="auto" />
-        <Stack screenOptions={{ headerShown: false }} />
+        <Slot/>
       </QueryClientProvider>
     </ThemeProvider>
   );

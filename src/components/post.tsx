@@ -1,8 +1,7 @@
 import { Box, Icon, Text } from '@atoms';
 import type { FeedPost } from '@skymarshal/sdk';
 import { router } from 'expo-router';
-import moment from 'moment';
-import type { ReplyParentPost } from '@/lib/utils';
+import { formatDate, type ReplyParentPost } from '@/lib/utils';
 import Image from './image';
 import { PostEmbed } from './post-embed';
 import TouchableOpacity from './touchable-opacity';
@@ -95,7 +94,7 @@ export default function Post({ post }: Props) {
               gap="2"
             >
               <Text fontSize={10} color="textMuted">
-                {moment(post.createdAt).fromNow()}
+                {formatDate(post.createdAt)}
               </Text>
               <TouchableOpacity>
                 <Icon name="More" variant="Linear" color="text" />

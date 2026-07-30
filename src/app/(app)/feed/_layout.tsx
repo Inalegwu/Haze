@@ -25,7 +25,6 @@ export default function Layout() {
 }
 
 function DrawerContent(props: DrawerContentComponentProps) {
-  const router = useRouter();
   const theme = useTheme<Theme>();
   const { data: timelines, isLoading } = app.timeline.myTimelines.useQuery();
 
@@ -86,7 +85,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           )}
           renderItem={({ item: feed, index: idx }) => (
             <TouchableOpacity
-              onPress={() => router.push(`/feed/${feed.uri}`)}
+              onPress={() => console.log({ uri: feed.uri })}
               borderBottomColor="border"
               borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
               paddingHorizontal="s"

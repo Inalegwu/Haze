@@ -89,6 +89,7 @@ export function extractExternal(embed: unknown): ExternalEmbed | null {
 
 // src/services/bluesky/BlueskyService.ts
 import { AppBskyFeedDefs } from '@atproto/api';
+import moment from 'moment';
 
 export type ReplyParentPost = {
   uri: string;
@@ -160,3 +161,16 @@ export function mapFeedItem(item: AppBskyFeedDefs.FeedViewPost) {
     replyParent: extractReplyParent(item),
   };
 }
+
+export const formatDate = (createdAt: string) => {
+  const date = moment(createdAt);
+  const now = moment();
+
+  if (now.diff(date, 'hours') < 72) {
+    return date.fromNow(true);
+  }
+
+  return date.year() === now.year()
+    ? date.format('MMM D')
+    : date.format('YYYY');
+};

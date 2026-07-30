@@ -23,7 +23,7 @@ export default function Feed() {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, isFetchingNextPage, hasNextPage]);
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return (
       <Container alignItems="center" justifyContent="center">
         <ActivityIndicator size="large" color={theme.colors.primary} />

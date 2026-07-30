@@ -53,17 +53,6 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
                   color={state.index === idx ? 'text' : 'textMuted'}
                 />
               </TouchableOpacity>
-              {idx === 1 && (
-                <TouchableOpacity
-                  alignItems="center"
-                  justifyContent="center"
-                  hitSlop={20}
-                  padding="m"
-                  onPress={() => navigation.navigate('compose')}
-                >
-                  <Icon name="MessageAdd1" size="6" />
-                </TouchableOpacity>
-              )}
             </React.Fragment>
           ))}
       </Box>

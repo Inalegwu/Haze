@@ -14,8 +14,8 @@
 			"@env": ["./src/env.js"],
 			"@components": ["./src/components/index.ts"],
 			"@atoms": ["./src/components/atoms/index.ts"],
-			"@/lib/*": ["./src/lib/*"],
-			"@api": ["./src/api/app.ts"]
+			"@api": ["./src/api/app.ts"],
+			"@/lib/*": ["./src/lib/*"]
 		}
 	},
 	"extends": "expo/tsconfig.base",
