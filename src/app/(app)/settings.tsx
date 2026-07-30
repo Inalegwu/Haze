@@ -1,12 +1,9 @@
 import { Box, Icon, Text } from '@atoms';
 import { Container, TouchableOpacity } from '@components';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import SafeAreaView from 'src/components/safe-area-view';
-import { useGlobalState } from '@/lib/state';
 
 export default function Settings() {
-  const router = useRouter();
-
   return (
     <Container>
       <SafeAreaView paddingHorizontal="m">
