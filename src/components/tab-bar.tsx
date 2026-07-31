@@ -23,9 +23,13 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
         {state.routes
           .filter(
             (r) =>
-              !['search', 'settings', 'post/[uri]/index', 'compose'].includes(
-                r.name,
-              ),
+              ![
+                'search',
+                'settings',
+                'post/[uri]/index',
+                'compose',
+                'feeds/[uri]/index',
+              ].includes(r.name),
           )
           .map((route, idx) => (
             <React.Fragment key={route.key}>

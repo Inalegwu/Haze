@@ -79,14 +79,18 @@ export default function Post({ post }: Props) {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Text
-              fontFamily="SatoshiBold"
-              numberOfLines={1}
-              fontSize={13}
-              fontWeight="600"
+            <TouchableOpacity
+              onPress={() => router.push(`/account/${post.author.handle}`)}
             >
-              {post.author.displayName}
-            </Text>
+              <Text
+                fontFamily="SatoshiBold"
+                numberOfLines={1}
+                fontSize={13}
+                fontWeight="600"
+              >
+                {post.author.displayName}
+              </Text>
+            </TouchableOpacity>
             <Box
               flexDirection="row"
               alignItems="center"

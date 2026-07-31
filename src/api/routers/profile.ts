@@ -10,11 +10,17 @@ export const profileRouter = router('profile', {
       ),
     staleTime: Number.POSITIVE_INFINITY,
   }),
+  getProfile: router.query({
+    fetcher: async (variables: { handle: string }) =>
+      await SkyRuntime.runPromise(
+        BlueskyService.use((s) => s.getProfile(variables.handle)),
+      ),
+  }),
   profilePosts: router.infiniteQuery({
-    fetcher: async (variables: { did: string }, { pageParam }) =>
+    fetcher: async (variables: { actor: string }, { pageParam }) =>
       await SkyRuntime.runPromise(
         BlueskyService.use((s) =>
-          s.getAuthorPosts(variables.did, {
+          s.getAuthorPosts(variables.actor, {
             cursor: pageParam,
           }),
         ),

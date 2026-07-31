@@ -21,7 +21,8 @@
 			},
 			"suspicious": {
 				"noArrayIndexKey": "off",
-				"noShadowRestrictedNames":"off"
+				"noShadowRestrictedNames":"off",
+				"noNonNullAssertedOptionalChain":"warn"
 			},
 			"a11y": {
 				"noStaticElementInteractions": "off"

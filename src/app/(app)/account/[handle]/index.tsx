@@ -2,13 +2,13 @@ import app from '@api';
 import { Box } from '@atoms';
 import { Container, FlatList, Post } from '@components';
 import { useTheme } from '@shopify/restyle';
+import { useLocalSearchParams } from 'expo-router';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
-import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
 
 export default function Profile() {
-  const session = useSessionStore((s) => s.session);
+  const { handle } = useLocalSearchParams<{ handle: string }>();
   const theme = useTheme<Theme>();
   const {
     data,
@@ -20,7 +20,7 @@ export default function Profile() {
     isRefetching,
   } = app.profile.profilePosts.useInfiniteQuery({
     variables: {
-      actor: session!.did,
+      actor: handle,
     },
   });
 

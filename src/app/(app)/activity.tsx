@@ -96,8 +96,8 @@ function NotificationRow({ notification }: { notification: NotificationItem }) {
 
   const onPress = () => {
     if (notification.reason === 'follow') {
-      // router.push(`/profile/${notification.author.handle}`);
-      console.log('implement viewing single profiles');
+      router.push(`/profile/${notification.author.handle}`);
+      // console.log('implement viewing single profiles');
     } else if (
       notification.reason === 'like' ||
       notification.reason === 'repost'

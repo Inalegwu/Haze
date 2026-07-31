@@ -2,18 +2,17 @@ import app from '@api';
 import { Box, Icon, Text } from '@atoms';
 import { Container, FlatList, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { router, Slot } from 'expo-router';
+import { router, Slot, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, Image, Linking, StyleSheet } from 'react-native';
-import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
 import { extractUrls } from '@/lib/utils';
 
-export default function ProfileLayout() {
-  const session = useSessionStore((s) => s.session);
+export default function Account() {
+  const { handle } = useLocalSearchParams<{ handle: string }>();
   const theme = useTheme<Theme>();
-  const { data: profile, isLoading } = app.profile.myProfile.useQuery({
+  const { data: profile, isLoading } = app.profile.getProfile.useQuery({
     variables: {
-      did: session?.did!,
+      handle,
     },
   });
 
