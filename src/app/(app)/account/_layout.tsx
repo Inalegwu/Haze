@@ -48,14 +48,10 @@ export default function Account() {
             width="100%"
             flexDirection="row"
             alignItems="center"
-            justifyContent="flex-end"
-            gap="5"
+            justifyContent="flex-start"
           >
-            <TouchableOpacity
-              hitSlop={20}
-              onPress={() => router.navigate('/settings')}
-            >
-              <Icon name="HamburgerMenu" color="textAlt" size="5" />
+            <TouchableOpacity onPress={() => router.back()} hitSlop={20}>
+              <Icon name="ArrowLeft2" color="textAlt" size="5" />
             </TouchableOpacity>
           </Box>
           <Box

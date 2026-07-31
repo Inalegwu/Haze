@@ -166,7 +166,7 @@ export const formatDate = (createdAt: string) => {
   const date = moment(createdAt);
   const now = moment();
 
-  if (now.diff(date, 'hours') < 72) {
+  if (now.diff(date, 'hours') < 24) {
     return date.fromNow(true);
   }
 

@@ -94,14 +94,15 @@ export default function Post({ post }: Props) {
             <Box
               flexDirection="row"
               alignItems="center"
-              justifyContent="flex-end"
+              paddingRight="xxxl"
+              justifyContent="center"
               gap="2"
             >
               <Text fontSize={10} color="textMuted">
                 {formatDate(post.createdAt)}
               </Text>
               <TouchableOpacity>
-                <Icon name="More" variant="Linear" color="text" />
+                <Icon name="More" variant="Linear" color="textMuted" />
               </TouchableOpacity>
             </Box>
           </Box>

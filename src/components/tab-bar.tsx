@@ -29,6 +29,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
                 'post/[uri]/index',
                 'compose',
                 'feeds/[uri]/index',
+                'account',
               ].includes(r.name),
           )
           .map((route, idx) => (
