@@ -16,11 +16,11 @@ export default function Login() {
 
   const { mutate: _login, isPending } = app.auth.login.useMutation({
     onSuccess: (data) => {
-      router.navigate('/(app)/feed');
       useSessionStore.getState().setSession({
         handle: data.handle!,
         did: data.did!,
       });
+      router.navigate('/(app)/feed');
     },
     onError: (error) => console.error(error),
   });

@@ -63,7 +63,7 @@ export default function Activity() {
   }
 
   return (
-    <SafeAreaView backgroundColor="background">
+    <SafeAreaView gap="3" backgroundColor="background">
       <Box
         width="100%"
         flexDirection="row"
@@ -71,11 +71,12 @@ export default function Activity() {
         justifyContent="flex-start"
         paddingHorizontal="m"
       >
-        <Text fontWeight="700" fontSize={25}>
+        <Text fontFamily="SatoshiBlack" fontSize={25}>
           Activity
         </Text>
       </Box>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={notifications}
         keyExtractor={(n) => n.uri}
         onEndReached={onEndReached}
@@ -113,7 +114,7 @@ function NotificationRow({ notification }: { notification: NotificationItem }) {
       <Box
         flexDirection="row"
         padding="m"
-        backgroundColor={notification.isRead ? 'background' : 'card'}
+        backgroundColor={notification.isRead ? 'background' : 'accent'}
       >
         <Image
           source={{ uri: notification.author.avatar }}
@@ -121,9 +122,9 @@ function NotificationRow({ notification }: { notification: NotificationItem }) {
         />
         <Box flex={1} paddingLeft="s">
           <Text>
-            <Text fontWeight="700">
+            <Text fontSize={12} fontFamily="SatoshiBold">
               {notification.author.displayName ?? notification.author.handle}
-            </Text>{' '}
+            </Text>
             {REASON_LABEL[notification.reason]}
           </Text>
           {previewText && (

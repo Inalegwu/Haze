@@ -51,8 +51,8 @@ export type ThemeEntry = {
 };
 
 const BUILT_IN_THEMES: ThemeEntry[] = [
-  { id: 'light', name: 'Sand', theme: light, isBuiltIn: true },
-  { id: 'dark', name: 'Warm Dark', theme: dark, isBuiltIn: true },
+  { id: 'light', name: 'Default Light', theme: light, isBuiltIn: true },
+  { id: 'dark', name: 'Default Dark', theme: dark, isBuiltIn: true },
 ];
 
 type ThemeStore = {
@@ -72,7 +72,7 @@ export const useThemeStore = create<ThemeStore>()(
   persist(
     (set, get) => ({
       customThemes: [],
-      activeThemeId: 'light',
+      activeThemeId: 'dark',
 
       addCustomTheme: (name, candidate) => {
         const result = validateTheme(candidate);

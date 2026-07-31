@@ -49,7 +49,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
                             : 'Menu'
                   }
                   size="6"
-                  variant="Linear"
+                  variant={state.index === idx ? 'Bold' : 'Linear'}
                   color={state.index === idx ? 'text' : 'textMuted'}
                 />
               </TouchableOpacity>

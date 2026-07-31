@@ -2,7 +2,7 @@ import app from '@api';
 import { Box, Icon, Text } from '@atoms';
 import { Container, FlatList, Link, TouchableOpacity } from '@components';
 import { useTheme } from '@shopify/restyle';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import {
   Drawer,
   type DrawerContentComponentProps,
@@ -85,7 +85,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           )}
           renderItem={({ item: feed, index: idx }) => (
             <TouchableOpacity
-              onPress={() => console.log({ uri: feed.uri })}
+              onPress={() => router.push(`/feed?${feed.uri}`)}
               borderBottomColor="border"
               borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
               paddingHorizontal="s"
