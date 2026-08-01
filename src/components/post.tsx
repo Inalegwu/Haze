@@ -106,10 +106,12 @@ export default function Post({ post }: Props) {
               </TouchableOpacity>
             </Box>
           </Box>
-          <Box width="89%" gap="3" paddingBottom="2">
-            <Text numberOfLines={10} fontSize={13.7} flexWrap="wrap">
-              {post.text}
-            </Text>
+          <Box width="89%" gap="2" paddingVertical="3">
+            {post.text.length > 0 && (
+              <Text numberOfLines={10} fontSize={13.7} flexWrap="wrap">
+                {post.text}
+              </Text>
+            )}
             <PostEmbed embed={post.embed} />
           </Box>
           <Box width="100%" flexDirection="row" gap="m">

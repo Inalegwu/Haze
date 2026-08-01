@@ -2,8 +2,12 @@ import { Box, Icon, Text } from '@atoms';
 import { Container, TouchableOpacity } from '@components';
 import { router } from 'expo-router';
 import SafeAreaView from 'src/components/safe-area-view';
+import { useGlobalState } from '@/lib/state';
 
 export default function Settings() {
+  const theme = useGlobalState((s) => s.theme);
+  const toggleTheme = useGlobalState((s) => s.toggleTheme);
+
   return (
     <Container>
       <SafeAreaView paddingHorizontal="m">
@@ -15,7 +19,7 @@ export default function Settings() {
           gap="2"
         >
           <TouchableOpacity onPress={() => router.back()}>
-            <Icon name="ArrowLeft" size="5" />
+            <Icon name="ArrowLeft2" size="5" />
           </TouchableOpacity>
           <Text fontSize={24} fontFamily="SatoshiBlack">
             Settings
@@ -45,6 +49,9 @@ export default function Settings() {
               justifyContent="space-between"
             >
               <Text>Theme</Text>
+              <TouchableOpacity onPress={toggleTheme}>
+                <Icon name={theme === 'dark' ? 'Sun1' : 'Moon'} />
+              </TouchableOpacity>
             </Box>
           </Box>
         </Box>

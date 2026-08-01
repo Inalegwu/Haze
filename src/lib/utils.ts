@@ -174,3 +174,27 @@ export const formatDate = (createdAt: string) => {
     ? date.format('MMM D')
     : date.format('YYYY');
 };
+
+export function formatNumber(value: number): string {
+  const abs = Math.abs(value);
+  const sign = value < 0 ? '-' : '';
+
+  if (abs < 1000) return `${sign}${abs}`;
+
+  const units: [number, string][] = [
+    [1_000_000_000, 'b'],
+    [1_000_000, 'm'],
+    [1_000, 'k'],
+  ];
+
+  for (const [threshold, suffix] of units) {
+    if (abs >= threshold) {
+      const scaled = Math.floor((abs / threshold) * 10) / 10; // truncate to 1 decimal, don't round
+      const formatted =
+        scaled % 1 === 0 ? scaled.toString() : scaled.toFixed(1);
+      return `${sign}${formatted}${suffix}`;
+    }
+  }
+
+  return `${sign}${abs}`;
+}

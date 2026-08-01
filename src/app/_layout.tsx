@@ -1,4 +1,5 @@
-import { StatusBar } from '@components';
+import { RootBottomSheet, StatusBar } from '@components';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@shopify/restyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Effect } from 'effect';
@@ -6,6 +7,7 @@ import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { LogBox } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SkyRuntime } from '@/lib/runtime';
 import { BlueskyService } from '@/lib/services/bluesky/service';
 import { useGlobalState, useSessionStore } from '@/lib/state';
@@ -47,24 +49,29 @@ export default function Layout() {
   if (!booted) return null;
 
   return (
-    <ThemeProvider theme={activeTheme === 'light' ? light : dark}>
-      <QueryClientProvider
-        client={
-          new QueryClient({
-            defaultOptions: {
-              queries: {
-                staleTime: 30 * 30,
-              },
-            },
-          })
-        }
-      >
-        <StatusBar
-          backgroundColor="background"
-          style={activeTheme === 'dark' ? 'light' : 'dark'}
-        />
-        <Slot />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <ThemeProvider theme={activeTheme === 'light' ? light : dark}>
+          <QueryClientProvider
+            client={
+              new QueryClient({
+                defaultOptions: {
+                  queries: {
+                    staleTime: 30 * 30,
+                  },
+                },
+              })
+            }
+          >
+            <StatusBar
+              backgroundColor="background"
+              style={activeTheme === 'dark' ? 'light' : 'dark'}
+            />
+            <Slot />
+            <RootBottomSheet />
+          </QueryClientProvider>
+        </ThemeProvider>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -1,35 +1,46 @@
 import { createTheme } from '@shopify/restyle';
 
+// Change ONLY these two lines to swap the accent hue.
+// Everything else in the palette is neutral grayscale.
+const ACCENT_LIGHT = '#0C7C8C'; // deep teal — reads well on warm white
+const ACCENT_DARK = '#4DD8E0'; // bright sky-teal — pops on near-black
+
 const palette = {
-  // Primary monochrome shades
-  white: '#FFFFFF',
-  offWhite: '#F6F7FB',
-  lightGray: '#E8E9F0',
-  mutedLight: '#8A8FA3',
-  textLight: '#12131A',
+  // ---- light neutrals (true neutral gray, 0% saturation — just dialed-down lightness, no hue) ----
+  warmWhite: '#F5F5F5',
+  cardLight: '#FCFCFC',
+  borderLight: '#E5E5E5',
+  mutedLight: '#8C8C8C',
+  textLight: '#1A1A1A',
 
-  offBlack: '#0D0E13',
-  surfaceDark: '#1B1C24',
-  borderDark: '#2A2C36',
-  mutedDark: '#8C90A3',
-  textDark: '#F5F6FA',
+  // ---- dark neutrals (true neutral gray, not pitch black) ----
+  deepBlack: '#0A0A0A',
+  cardDark: '#161616',
+  borderDark: '#272727',
+  mutedDark: '#8F8F8F',
+  textDark: '#F2F2F2',
 
-  blueLight: '#3D7BFF',
-  blueDark: '#5B8DEF',
+  // ---- the one accent, per-mode for contrast ----
+  accentLight: ACCENT_LIGHT,
+  accentDark: ACCENT_DARK,
+
+  // subtle accent-tinted fill for badges / selected states
+  accentMutedLight: '#0C7C8C1A', // 10% alpha
+  accentMutedDark: '#4DD8E01F', // 12% alpha, accent stays the only hue in dark mode too
 };
 
 const light = createTheme({
   colors: {
-    background: palette.offWhite,
-    card: palette.white,
-    primary: palette.textLight,
-    accent: palette.blueLight,
+    background: palette.warmWhite,
+    card: palette.cardLight,
     text: palette.textLight,
     textMuted: palette.mutedLight,
+    border: palette.borderLight,
+    accent: palette.accentLight,
+    accentMuted: palette.accentMutedLight,
+    accentText: palette.warmWhite, // text placed on top of a solid accent fill
+    navigation: palette.textLight,
     textAlt: palette.textDark,
-    border: palette.lightGray,
-    navigation: '#12131A',
-    inputBackground: palette.white,
   },
   spacing: {
     '-1': -1,
@@ -116,19 +127,19 @@ const light = createTheme({
   },
 });
 
-const dark = createTheme({
+const dark: Theme = createTheme({
   ...light,
   colors: {
     ...light.colors,
-    background: palette.offBlack,
-    card: palette.surfaceDark,
-    primary: palette.textDark,
-    accent: palette.blueDark,
+    background: palette.deepBlack,
+    card: palette.cardDark,
     text: palette.textDark,
     textMuted: palette.mutedDark,
     border: palette.borderDark,
+    accent: palette.accentDark,
+    accentMuted: palette.accentMutedDark,
+    accentText: palette.deepBlack,
     navigation: '#000000',
-    inputBackground: palette.surfaceDark,
   },
 });
 

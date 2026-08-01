@@ -3,9 +3,9 @@ import {
   ChatManager,
   type CreatePostInput,
   FeedsManager,
+  NetworkManager,
   NotificationManager,
   PostManager,
-  ProfileManager,
 } from '@skymarshal/sdk';
 import { Effect } from 'effect';
 import { asyncStorageAdapter } from '@/lib/proto/session';
@@ -28,9 +28,9 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
       });
       const feeds = new FeedsManager(auth.agent);
       const posts = new PostManager(auth.agent);
-      const profiles = new ProfileManager(auth.agent);
       const notifications = new NotificationManager(auth.agent);
       const chat = new ChatManager(auth.agent);
+      const network = new NetworkManager(auth.agent);
 
       return {
         login: (identifier: string, password: string) =>
@@ -115,7 +115,11 @@ export class BlueskyService extends Effect.Service<BlueskyService>()(
           wrap('getPostThread', () => posts.getPostThread(uri, depth)),
 
         getProfile: (actor: string) =>
-          wrap('getProfile', () => profiles.getProfile(actor)),
+          wrap('getProfile', () => network.getProfile(actor)),
+
+        follow: (did: string) => wrap('follow', () => network.follow(did)),
+        unfollow: (followUri: string) =>
+          wrap('unfollow', () => network.unfollow(followUri)),
 
         getAuthorPosts: (
           actor: string,

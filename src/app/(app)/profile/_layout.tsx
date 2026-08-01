@@ -11,9 +11,9 @@ import { extractUrls } from '@/lib/utils';
 export default function ProfileLayout() {
   const session = useSessionStore((s) => s.session);
   const theme = useTheme<Theme>();
-  const { data: profile, isLoading } = app.profile.myProfile.useQuery({
+  const { data: profile, isLoading } = app.profile.getProfile.useQuery({
     variables: {
-      did: session?.did!,
+      actor: session?.did!,
     },
   });
 

@@ -35,7 +35,7 @@ export default function Page() {
         justifyContent="space-between"
       >
         <TouchableOpacity hitSlop={20} onPress={() => router.back()}>
-          <Icon name="ArrowLeft" size="6" />
+          <Icon name="ArrowLeft2" size="6" />
         </TouchableOpacity>
         <Box
           flexDirection="row"

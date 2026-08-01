@@ -42,7 +42,7 @@ function ThreadRow({
 
   return (
     <Pressable onPress={() => goToPost(post.uri)}>
-      <Box flexDirection="row">
+      <Box flexDirection="row" marginVertical="1">
         <Box width={avatarSize} alignItems="center">
           {showLineAbove && (
             <Box
@@ -72,10 +72,10 @@ function ThreadRow({
         </Box>
         <Box flex={1} paddingLeft="s" paddingBottom="m">
           <Box flexDirection="row" alignItems="center">
-            <Text fontWeight="700">
+            <Text fontFamily="SatoshiBold" fontSize={13}>
               {post.author.displayName ?? post.author.handle}
             </Text>
-            {/* <Text color="textMuted" marginLeft="xs">
+            {/* <Text fontSize={10} color="textMuted" marginLeft="xs">
               @{post.author.handle}
             </Text> */}
           </Box>

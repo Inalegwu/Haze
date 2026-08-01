@@ -28,6 +28,10 @@ export function PostEmbed({ embed, onImagePress }: Props) {
   return null;
 }
 
+const MAX_SINGLE_IMAGE_HEIGHT = 500;
+const MIN_ASPECT_RATIO = 0.6; // clamp very tall portrait images
+const MAX_ASPECT_RATIO = 2.4; // clamp very wide panoramic images
+
 function PostImageGrid({
   images,
   onPress,
@@ -40,9 +44,19 @@ function PostImageGrid({
   const containerWidth = width - 32;
   const gap = 4;
 
-  const tileSize = (containerWidth - gap) / 2;
-
   if (images.length === 1) {
+    const rawRatio = images[0]?.aspectRatio
+      ? images[0].aspectRatio.width / images[0].aspectRatio.height
+      : 1.5;
+    const clampedRatio = Math.min(
+      Math.max(rawRatio, MIN_ASPECT_RATIO),
+      MAX_ASPECT_RATIO,
+    );
+    const height = Math.min(
+      containerWidth / clampedRatio,
+      MAX_SINGLE_IMAGE_HEIGHT,
+    );
+
     return (
       <Pressable onPress={() => onPress?.(0, images)}>
         <Image
@@ -51,7 +65,8 @@ function PostImageGrid({
           borderRadius="m"
           contentFit="cover"
           style={{
-            height: tileSize + 200,
+            height,
+            width: containerWidth,
             borderColor: theme.colors.border,
             borderWidth: 1,
           }}
@@ -59,6 +74,8 @@ function PostImageGrid({
       </Pressable>
     );
   }
+
+  const tileSize = (containerWidth - gap) / 2;
 
   return (
     <ScrollView
@@ -76,7 +93,7 @@ function PostImageGrid({
             borderRadius="m"
             style={{
               width: images.length === 3 && i === 0 ? containerWidth : tileSize,
-              height: tileSize + 80,
+              height: tileSize,
               borderColor: theme.colors.border,
               borderWidth: 1,
             }}

@@ -98,67 +98,6 @@ function DrawerContent(props: DrawerContentComponentProps) {
             </TouchableOpacity>
           )}
         />
-        {/* <ScrollView
-          contentContainerStyle={{ gap: 5 }}
-          showsVerticalScrollIndicator={false}
-        >
-          {feeds.length > 0 && (
-            <Box gap="2">
-              <Text fontSize={16}> Feeds </Text>
-              <Box
-                borderRadius="m"
-                backgroundColor="card"
-                borderWidth={0.6}
-                borderColor="border"
-              >
-                {feeds.map(
-                  (feed, idx) =>
-                    feed.displayName && (
-                      <Box
-                        borderBottomColor="border"
-                        borderBottomWidth={idx !== feeds.length - 1 ? 0.6 : 0}
-                        paddingHorizontal="s"
-                        paddingVertical="s"
-                        key={feed.id}
-                      >
-                        <Text color="textMuted" fontSize={13}>
-                          {feed.displayName}
-                        </Text>
-                      </Box>
-                    ),
-                )}
-              </Box>
-            </Box>
-          )}
-          {lists.length > 0 && (
-            <Box gap="2">
-              <Text fontWeight="600" fontSize={16}>
-                {' '}
-                Lists{' '}
-              </Text>
-              <Box
-                borderRadius="m"
-                backgroundColor="card"
-                borderWidth={0.6}
-                borderColor="border"
-              >
-                {lists.map((list, idx) => (
-                  <Box
-                    borderBottomColor="border"
-                    borderBottomWidth={idx !== lists.length - 1 ? 0.6 : 0}
-                    paddingHorizontal="s"
-                    paddingVertical="s"
-                    key={list.id}
-                  >
-                    <Text color="textMuted" fontSize={13}>
-                      {String.capitalize(getFeedName(list.value) || '')}
-                    </Text>
-                  </Box>
-                ))}
-              </Box>
-            </Box>
-          )}
-        </ScrollView> */}
       </SafeAreaView>
     </Box>
   );
@@ -178,7 +117,7 @@ function Header(props: DrawerHeaderProps) {
         alignItems="flex-end"
         justifyContent="space-between"
         width="100%"
-        paddingHorizontal="2"
+        paddingHorizontal="1"
       >
         <TouchableOpacity
           hitSlop={20}
