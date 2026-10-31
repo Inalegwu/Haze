@@ -3,22 +3,22 @@
 // ! code, this might cause an error because
 // ! node standard library packages are used
 // ! here
-const z = require("zod");
-const path = require("node:path");
+const z = require('zod');
+const path = require('node:path');
 
 // determine the application environment
-const APP_ENV = process.env.APP_ENV ?? "development";
+const APP_ENV = process.env.APP_ENV ?? 'development';
 
 // resolve .env
 const envPath = path.resolve(__dirname, `.env.${APP_ENV}`);
 
-require("dotenv").config({
+require('dotenv').config({
   path: envPath,
 });
 
 // schema for our client environment to be validated
 const client = z.object({
-  APP_ENV: z.enum(["development", "staging", "production"]),
+  APP_ENV: z.enum(['development', 'staging', 'production']),
 });
 
 const buildTime = z.object({});
@@ -53,7 +53,7 @@ const parsed = merged.safeParse(_env);
 if (!parsed.success) {
   // verbose error message to allow the error to be solved easily
   console.error(
-    "❌ Invalid Environment Variables",
+    '❌ Invalid Environment Variables',
     parsed.error.flatten().fieldErrors,
     `\n ❌ Missing Variables in .env.${APP_ENV} file , make sure all required variables are defined in the .env.${APP_ENV} file `,
     `\n 💡 Tip : If you recently updated the .env.${APP_ENV} and the error still persists , try restarting the sever with the -cc flag to clear the cache`,
@@ -61,7 +61,7 @@ if (!parsed.success) {
 
   // App level error , this will pull up the red screen we know and hate
   throw new Error(
-    "Invalid Environment Variables , Check terminal for more details",
+    'Invalid Environment Variables , Check terminal for more details',
   );
 }
 

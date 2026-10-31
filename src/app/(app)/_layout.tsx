@@ -1,13 +1,15 @@
 import app from '@api';
-import { Box, Text } from '@atoms';
-import { Image, TouchableOpacity } from '@components';
+import { Box, Icon, Text } from '@atoms';
+import { Image, ScrollView, TouchableOpacity } from '@components';
+import type { Profile } from '@skymarshal/sdk';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import Drawer, {
   type DrawerContentComponentProps,
   type DrawerHeaderProps,
 } from 'expo-router/drawer';
 import { useEffect } from 'react';
-import { useSessionStore } from '@/lib/state';
+import { useGlobalState, useSessionStore } from '@/lib/state';
 
 export default function Layout() {
   const router = useRouter();
@@ -15,7 +17,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (!session) {
-      router.navigate('/(auth)/');
+      router.navigate('/(auth)/login');
     }
   }, [router, session]);
 
@@ -55,10 +57,94 @@ function Header({ navigation }: DrawerHeaderProps) {
   );
 }
 
-function DrawerContent({ navigation }: DrawerContentComponentProps) {
+function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
+  const qc = useQueryClient();
+  const theme = useGlobalState((s) => s.theme);
+  const toggleTheme = useGlobalState((s) => s.toggleTheme);
+
+  const profile = qc.getQueryData(['profile.getProfile']) as Profile;
+
   return (
-    <Box width="100%" flex={1}>
-      <Text>{JSON.stringify(navigation)}</Text>
+    <Box width="100%" flexDirection="column" flex={1}>
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Box
+          flexDirection="column"
+          alignItems="flex-start"
+          justifyContent="flex-start"
+        >
+          <Image source={{ uri: profile.avatar }} />
+          <Box flexDirection="column" alignItems="flex-start">
+            <Text>{profile.displayName}</Text>
+            <Text fontSize={12} color="textMuted">
+              @{profile.handle}
+            </Text>
+          </Box>
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
+          >
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text>{profile.followsCount}</Text>
+              <Text>Following</Text>
+            </Box>
+            <Box
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text>{profile.followersCount}</Text>
+              <Text>Follower{profile.followersCount > 1 ? 's' : ''}</Text>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="flex-start"
+        >
+          <Text>accounts</Text>
+        </Box>
+      </Box>
+      <ScrollView width="100%" flex={1}>
+        {state.routes.map((route) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate(route.name)}
+            key={route.key}
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="flex-start"
+            gap="2"
+          >
+            <Text>{route.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <TouchableOpacity onPress={toggleTheme}>
+          <Icon
+            name={
+              theme === 'light' ? 'Moon' : theme === 'dark' ? 'Sun' : 'Devices'
+            }
+            size="5"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('settings')}>
+          <Icon name="Settings" size="5" />
+        </TouchableOpacity>
+      </Box>
     </Box>
   );
 }
