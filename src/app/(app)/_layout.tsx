@@ -1,6 +1,13 @@
 import app from '@api';
-import { Box, Icon, Text } from '@atoms';
-import { Image, ScrollView, TouchableOpacity } from '@components';
+import {
+  Avatar,
+  Box,
+  Icon,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+} from '@atoms';
 import type { Profile } from '@skymarshal/sdk';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
@@ -10,6 +17,7 @@ import Drawer, {
 } from 'expo-router/drawer';
 import { useEffect } from 'react';
 import { useGlobalState, useSessionStore } from '@/lib/state';
+import { getInitials } from '@/lib/utils';
 
 export default function Layout() {
   const router = useRouter();
@@ -76,7 +84,10 @@ function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
           alignItems="flex-start"
           justifyContent="flex-start"
         >
-          <Image source={{ uri: profile.avatar }} />
+          <Avatar
+            src={profile.avatar ?? ''}
+            fallback={getInitials(profile.displayName ?? 'Unknown Initials')}
+          />
           <Box flexDirection="column" alignItems="flex-start">
             <Text>{profile.displayName}</Text>
             <Text fontSize={12} color="textMuted">

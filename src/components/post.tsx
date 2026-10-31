@@ -1,10 +1,8 @@
-import { Box, Icon, Text } from '@atoms';
+import { Box, Icon, Image, Text, TouchableOpacity } from '@atoms';
 import type { FeedPost } from '@skymarshal/sdk';
 import { router } from 'expo-router';
 import { formatDate, type ReplyParentPost } from '@/lib/utils';
-import Image from './image';
 import { PostEmbed } from './post-embed';
-import TouchableOpacity from './touchable-opacity';
 
 type Props = {
   post: FeedPost & { replyParent?: ReplyParentPost };

@@ -8,7 +8,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (session) {
-      router.navigate('/(app)/feed');
+      router.navigate('/(app)/shell/feed');
     }
   }, [router, session]);
 

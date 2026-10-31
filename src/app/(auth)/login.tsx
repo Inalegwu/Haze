@@ -1,6 +1,6 @@
 import app from '@api';
-import { Text } from '@atoms';
-import { Container, FormInput, TouchableOpacity } from '@components';
+import { FormInput, Text, TouchableOpacity } from '@atoms';
+import { Container } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from '@shopify/restyle';
 import { useRouter } from 'expo-router';
@@ -20,7 +20,7 @@ export default function Login() {
         handle: data.handle!,
         did: data.did!,
       });
-      router.navigate('/(app)/feed');
+      router.navigate('/(app)/shell/feed');
     },
     onError: (error) => console.error(error),
   });

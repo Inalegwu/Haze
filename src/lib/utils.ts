@@ -3,6 +3,12 @@ import * as String from 'effect/String';
 import { PixelRatio, Platform } from 'react-native';
 import { ANDROID_SCALE_LIMIT, SCALE } from './constants';
 
+export const getInitials = cache((phrase: string) => {
+  const split = phrase.split(' ');
+
+  return `${split[0]?.[0]}${split[1]?.[0]}`;
+});
+
 export const normalize = (size: number) =>
   Platform.OS === 'ios'
     ? Math.round(PixelRatio.roundToNearestPixel(size * SCALE))
@@ -90,6 +96,7 @@ export function extractExternal(embed: unknown): ExternalEmbed | null {
 // src/services/bluesky/BlueskyService.ts
 import { AppBskyFeedDefs } from '@atproto/api';
 import moment from 'moment';
+import { cache } from 'react';
 
 export type ReplyParentPost = {
   uri: string;

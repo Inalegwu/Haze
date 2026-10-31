@@ -1,4 +1,4 @@
-import { StatusBar } from '@components';
+import { StatusBar } from '@atoms';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@shopify/restyle';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

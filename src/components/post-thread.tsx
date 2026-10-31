@@ -1,9 +1,8 @@
-import { Box, Icon, Text } from '@atoms';
+import { Box, Icon, Image, Text } from '@atoms';
 import type { PostManager } from '@skymarshal/sdk';
 import { router } from 'expo-router';
 import { Fragment } from 'react';
 import { Pressable, ScrollView } from 'react-native';
-import Image from './image';
 import { PostEmbed } from './post-embed';
 
 // Derived structurally so it always matches what PostManager.getPostThread

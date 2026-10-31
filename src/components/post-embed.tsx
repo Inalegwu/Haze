@@ -1,11 +1,8 @@
-import { Box, Text } from '@atoms';
+import { Box, Image, ScrollView, Text, TouchableOpacity } from '@atoms';
 import { useTheme } from '@shopify/restyle';
 import { Linking, Pressable, useWindowDimensions } from 'react-native';
 import type { Theme } from '@/lib/theme';
 import { extractExternal, extractImages } from '@/lib/utils';
-import Image from './image';
-import ScrollView from './scrollview';
-import TouchableOpacity from './touchable-opacity';
 
 type Props = {
   embed: unknown;

@@ -1,6 +1,6 @@
 import app from '@api';
-import { Box } from '@atoms';
-import { FlatList, Post, PostSkeleton } from '@components';
+import { Box, FlatList } from '@atoms';
+import { Post, PostSkeleton } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';

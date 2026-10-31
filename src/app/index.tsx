@@ -1,5 +1,5 @@
-import { Box, Text } from '@atoms';
-import { Container, TouchableOpacity } from '@components';
+import { Box, Text, TouchableOpacity } from '@atoms';
+import { Container } from '@components';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useSessionStore } from '@/lib/state';
@@ -11,7 +11,7 @@ export default function Page() {
 
   useEffect(() => {
     if (session) {
-      router.replace('/feed');
+      router.replace('/(app)/shell/feed');
     }
   }, [router, session]);
 

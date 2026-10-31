@@ -1,6 +1,6 @@
 import app from '@api';
-import { Box, Icon } from '@atoms';
-import { Container, PostThread, TouchableOpacity } from '@components';
+import { Box, Icon, TouchableOpacity } from '@atoms';
+import { Container, PostThread } from '@components';
 import { useTheme } from '@shopify/restyle';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator } from 'react-native';
