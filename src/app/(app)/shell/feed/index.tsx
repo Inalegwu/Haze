@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
 import type { Theme } from '@/lib/theme';
 
+// TODO: this is a tab view that lists the users subscribed feeds
 export default function Feed() {
   const {
     data,

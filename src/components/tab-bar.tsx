@@ -20,46 +20,34 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
         paddingVertical="xl"
         paddingHorizontal="l"
       >
-        {state.routes
-          .filter(
-            (r) =>
-              ![
-                'search',
-                'settings',
-                'post/[uri]/index',
-                'compose',
-                'feeds/[uri]/index',
-                'account',
-              ].includes(r.name),
-          )
-          .map((route, idx) => (
-            <React.Fragment key={route.key}>
-              <TouchableOpacity
-                alignItems="center"
-                justifyContent="center"
-                hitSlop={20}
-                padding="m"
-                onPress={() => navigation.navigate(route.name)}
-              >
-                <Icon
-                  name={
-                    route.name === 'feed'
-                      ? 'Home'
-                      : route.name === 'messages'
-                        ? 'Send2'
-                        : route.name === 'activity'
-                          ? 'Heart'
-                          : route.name === 'profile'
-                            ? 'Profile'
-                            : 'Menu'
-                  }
-                  size="6"
-                  variant={state.index === idx ? 'Bold' : 'Linear'}
-                  color={state.index === idx ? 'text' : 'textMuted'}
-                />
-              </TouchableOpacity>
-            </React.Fragment>
-          ))}
+        {state.routes.map((route, idx) => (
+          <React.Fragment key={route.key}>
+            <TouchableOpacity
+              alignItems="center"
+              justifyContent="center"
+              hitSlop={20}
+              padding="m"
+              onPress={() => navigation.navigate(route.name)}
+            >
+              <Icon
+                name={
+                  route.name === 'feed'
+                    ? 'Home'
+                    : route.name === 'chat'
+                      ? 'Message2'
+                      : route.name === 'notifications'
+                        ? 'Notification'
+                        : route.name === 'search'
+                          ? 'SearchNormal'
+                          : 'Menu'
+                }
+                size="6"
+                variant={state.index === idx ? 'Bold' : 'Linear'}
+                color={state.index === idx ? 'text' : 'textMuted'}
+              />
+            </TouchableOpacity>
+          </React.Fragment>
+        ))}
       </Box>
     </Box>
   );

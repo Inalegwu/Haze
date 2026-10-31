@@ -1,10 +1,10 @@
 import app from '@api';
-import { Box, Input, Text } from '@atoms';
-import { Container, TouchableOpacity } from '@components';
+import { Text } from '@atoms';
+import { Container, FormInput, TouchableOpacity } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from '@shopify/restyle';
 import { useRouter } from 'expo-router';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { useSessionStore } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
@@ -14,7 +14,7 @@ export default function Login() {
   const router = useRouter();
   const color = useTheme<Theme>().colors;
 
-  const { mutate: _login, isPending } = app.auth.login.useMutation({
+  const { mutate, isPending } = app.auth.login.useMutation({
     onSuccess: (data) => {
       useSessionStore.getState().setSession({
         handle: data.handle!,
@@ -25,7 +25,7 @@ export default function Login() {
     onError: (error) => console.error(error),
   });
 
-  const { control } = useForm<LoginFormData>({
+  const { control, handleSubmit } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       identifier: '',
@@ -45,54 +45,12 @@ export default function Login() {
         <Text fontFamily="SatoshiBlack" fontSize={30}>
           Login
         </Text>
-        <Controller
+        <FormInput
           control={control}
           name="identifier"
-          render={({
-            field: { onBlur, onChange, value },
-            fieldState: { error },
-          }) => (
-            <Box width="100%" alignItems="flex-start">
-              <Input
-                placeholder="Identifier"
-                backgroundColor="card"
-                borderColor="border"
-                borderWidth={0.8}
-                borderRadius="m"
-                width="100%"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                paddingHorizontal="m"
-                value={value}
-              />
-              {error && <Text fontSize={11}>{error.message}</Text>}
-            </Box>
-          )}
+          label="ATProto Identifier"
         />
-        <Controller
-          control={control}
-          name="password"
-          render={({
-            field: { onBlur, onChange, value },
-            fieldState: { error },
-          }) => (
-            <Box width="100%" alignItems="flex-start">
-              <Input
-                placeholder="Password"
-                backgroundColor="card"
-                borderColor="border"
-                borderWidth={0.8}
-                borderRadius="m"
-                width="100%"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                paddingHorizontal="m"
-                value={value}
-              />
-              {error && <Text fontSize={11}>{error.message}</Text>}
-            </Box>
-          )}
-        />
+        <FormInput control={control} name="password" label="Password" />
         <TouchableOpacity
           padding="3"
           borderRadius="full"
@@ -105,18 +63,11 @@ export default function Login() {
           justifyContent="center"
           gap="m"
           activeOpacity={0.8}
-          onPress={() =>
-            _login({
-              identifier: 'disgruntleddev.bsky.social',
-              password: 'inalegwu2004',
-            })
-          }
+          onPress={handleSubmit((data) => mutate(data))}
           disabled={isPending}
         >
           <Text>Login</Text>
-          {isPending && (
-            <ActivityIndicator size="small" color={color.primary} />
-          )}
+          {isPending && <ActivityIndicator size="small" color={color.accent} />}
         </TouchableOpacity>
       </Container>
     </KeyboardAvoidingView>

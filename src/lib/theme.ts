@@ -124,6 +124,16 @@ const light = createTheme({
       fontSize: 16,
       color: 'text',
     },
+    formLabel: {
+      fontFamily: 'SatoshiMedium',
+      fontSize: 13,
+      color: 'text',
+    },
+    formError: {
+      fontFamily: 'SatoshiLight',
+      fontSize: 12,
+      color: 'accentMuted',
+    },
   },
 });
 

@@ -19,7 +19,7 @@ export default function Page() {
   if (isLoading || !thread) {
     return (
       <Container alignItems="center" justifyContent="center">
-        <ActivityIndicator size="large" color={color.primary} />
+        <ActivityIndicator size="large" color={color.accent} />
       </Container>
     );
   }
