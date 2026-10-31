@@ -149,7 +149,7 @@ const dark: Theme = createTheme({
     accent: palette.accentDark,
     accentMuted: palette.accentMutedDark,
     accentText: palette.deepBlack,
-    navigation: '#000000',
+    navigation: palette.textDark,
   },
 });
 
