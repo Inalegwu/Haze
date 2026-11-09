@@ -1,13 +1,5 @@
 import app from '@api';
-import {
-  Avatar,
-  Box,
-  Icon,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-} from '@atoms';
+import { Avatar, Box, Icon, Text, TouchableOpacity } from '@atoms';
 import type { Profile } from '@skymarshal/sdk';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
@@ -17,7 +9,7 @@ import Drawer, {
 } from 'expo-router/drawer';
 import { useEffect } from 'react';
 import { useGlobalState, useSessionStore } from '@/lib/state';
-import { getInitials } from '@/lib/utils';
+import { formatNumber, getInitials } from '@/lib/utils';
 
 export default function Layout() {
   const router = useRouter();
@@ -58,9 +50,15 @@ function Header({ navigation }: DrawerHeaderProps) {
   return (
     <Box width="100%" alignItems="center" justifyContent="space-between">
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-        <Image source={{ uri: profile.avatar }} />
+        <Avatar
+          src={profile.avatar ?? ''}
+          fallback={getInitials(profile.displayName ?? 'Unknown Initials')}
+        />
       </TouchableOpacity>
       <Box flex={1} />
+      <TouchableOpacity>
+        <Icon name="Setting3" />
+      </TouchableOpacity>
     </Box>
   );
 }
@@ -104,7 +102,7 @@ function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
               alignItems="center"
               justifyContent="center"
             >
-              <Text>{profile.followsCount}</Text>
+              <Text>{formatNumber(profile.followsCount)}</Text>
               <Text>Following</Text>
             </Box>
             <Box
@@ -112,7 +110,7 @@ function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
               alignItems="center"
               justifyContent="center"
             >
-              <Text>{profile.followersCount}</Text>
+              <Text>{formatNumber(profile.followersCount)}</Text>
               <Text>Follower{profile.followersCount > 1 ? 's' : ''}</Text>
             </Box>
           </Box>
@@ -122,10 +120,22 @@ function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
           alignItems="center"
           justifyContent="flex-start"
         >
-          <Text>accounts</Text>
+          <TouchableOpacity onPress={toggleTheme}>
+            <Icon
+              name={
+                theme === 'light'
+                  ? 'Moon'
+                  : theme === 'dark'
+                    ? 'Sun'
+                    : theme === 'system'
+                      ? 'Devices'
+                      : 'Sun'
+              }
+            />
+          </TouchableOpacity>
         </Box>
       </Box>
-      <ScrollView width="100%" flex={1}>
+      <Box width="100%" flex={1}>
         {state.routes.map((route) => (
           <TouchableOpacity
             onPress={() => navigation.navigate(route.name)}
@@ -133,28 +143,11 @@ function DrawerContent({ navigation, state }: DrawerContentComponentProps) {
             flexDirection="row"
             alignItems="center"
             justifyContent="flex-start"
-            gap="2"
+            width="100%"
           >
             <Text>{route.name}</Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <TouchableOpacity onPress={toggleTheme}>
-          <Icon
-            name={
-              theme === 'light' ? 'Moon' : theme === 'dark' ? 'Sun' : 'Devices'
-            }
-            size="5"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('settings')}>
-          <Icon name="Settings" size="5" />
-        </TouchableOpacity>
       </Box>
     </Box>
   );

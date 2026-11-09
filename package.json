@@ -19,7 +19,7 @@
 		"android:production": "cross-env APP_ENV=production bun run android",
 		"ios:production": "cross-env APP_ENV=production bun run ios",
 		"lint": "bunx @biomejs/biome check --only ./src",
-		"typecheck":"bun tsc --noEmit"
+		"typecheck": "bun tsc --noEmit"
 	},
 	"dependencies": {
 		"@atproto/api": "^0.20.34",

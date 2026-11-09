@@ -1,10 +1,36 @@
 import app from '@api';
-import { Box, FlatList } from '@atoms';
-import { Post, PostSkeleton } from '@components';
+import { Box, FlatList, ScrollView, Text, TouchableOpacity } from '@atoms';
+import { Container, Post, PostSkeleton } from '@components';
 import { useTheme } from '@shopify/restyle';
+import { Array } from 'effect';
 import { useCallback } from 'react';
 import { ActivityIndicator, RefreshControl } from 'react-native';
+import { useGlobalState } from '@/lib/state';
 import type { Theme } from '@/lib/theme';
+
+export function TabbedTimelineView() {
+  const savedPins = useGlobalState((s) => s.pinnedTimelines);
+  const unpin = useGlobalState((s) => s.unpinTimeline);
+
+  const pinnedTimelines = Array.fromIterable(savedPins);
+
+  return (
+    <Container>
+      <Text>Tabbed view</Text>
+      <ScrollView horizontal width="100%">
+        {pinnedTimelines.map((timeline) => (
+          <TouchableOpacity
+            key={timeline.key}
+            onLongPress={() => unpin(timeline.key)}
+          >
+            <Text>{timeline.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <Text>{JSON.stringify(pinnedTimelines)}</Text>
+    </Container>
+  );
+}
 
 // TODO: this is a tab view that lists the users subscribed feeds
 export default function Feed() {

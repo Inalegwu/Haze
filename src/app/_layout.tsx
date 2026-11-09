@@ -19,11 +19,15 @@ export default function Layout() {
   const activeTheme = useGlobalState((s) => s.theme);
   const [booted, setBooted] = useState(false);
   const [fontsLoaded] = useFonts({
-    SatoshiMedium: require('../assets/fonts/Satoshi-Medium.otf'),
-    SatoshiRegular: require('../assets/fonts/Satoshi-Regular.otf'),
-    SatoshiLight: require('../assets/fonts/Satoshi-Light.otf'),
-    SatoshiBold: require('../assets/fonts/Satoshi-Bold.otf'),
-    SatoshiBlack: require('../assets/fonts/Satoshi-Black.otf'),
+    FontBlack: require('../assets/fonts/Onest-Black.ttf'),
+    FontBold: require('../assets/fonts/Onest-Bold.ttf'),
+    FontExtraBold: require('../assets/fonts/Onest-ExtraBold.ttf'),
+    FontExtraLight: require('../assets/fonts/Onest-ExtraLight.ttf'),
+    FontLight: require('../assets/fonts/Onest-Light.ttf'),
+    FontMedium: require('../assets/fonts/Onest-Medium.ttf'),
+    FontRegular: require('../assets/fonts/Onest-Regular.ttf'),
+    FontSemiBold: require('../assets/fonts/Onest-SemiBold.ttf'),
+    FontThin: require('../assets/fonts/Onest-Thin.ttf'),
   });
 
   useEffect(() => {
